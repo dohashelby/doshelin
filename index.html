@@ -145,8 +145,34 @@ header {
 .card-tagline { font-size: 12px; color: var(--muted2); line-height: 1.5; flex: 1; margin-top: 2px; }
 .card-footer { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
 .card-stars { display: flex; align-items: center; gap: 2px; }
-.s { font-size: 11px; color: var(--muted); }
-.s.on { color: var(--star); }
+.s, .ms {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+
+.s::before, .ms::before {
+  content: '★';
+  color: var(--muted);
+}
+
+.s.on::before, .ms.on::before {
+  color: var(--star);
+}
+
+.s.half::before, .ms.half::before {
+  color: var(--muted);
+}
+
+.s.half::after, .ms.half::after {
+  content: '★';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  overflow: hidden;
+  color: var(--star);
+}
 .s-num { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); margin-left: 4px; }
 .card-michelin { display: flex; align-items: center; gap: 5px; }
 .cm-dots { display: flex; gap: 1px; }
@@ -194,8 +220,6 @@ header {
 
 .modal-rating-block { display: flex; flex-direction: column; gap: 7px; margin-top: 4px; }
 .modal-stars-row { display: flex; align-items: center; gap: 3px; }
-.ms { font-size: 15px; color: var(--muted); }
-.ms.on { color: var(--star); }
 .ms-num { font-family: var(--ff-mono); font-size: 11px; color: var(--muted2); margin-left: 5px; }
 
 .modal-michelin-row { display: flex; align-items: center; gap: 7px; }
@@ -345,11 +369,14 @@ function getFiltered() {
 }
 
 function renderStars(rating, cls) {
-  return Array.from({length:5},(_,i) => {
+  return Array.from({ length: 5 }, (_, i) => {
     const n = i + 1;
-    const on = rating >= n ? ' on' : (rating >= n - 0.5 ? ' on' : '');
-    const ch = rating >= n ? '★' : (rating >= n - 0.5 ? '⯨' : '☆');
-    return `<span class="${cls}${on}">${ch}</span>`;
+    let state = '';
+
+    if (rating >= n) state = ' on';
+    else if (rating >= n - 0.5) state = ' half';
+
+    return `<span class="${cls}${state}"></span>`;
   }).join('');
 }
 
