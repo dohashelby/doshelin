@@ -55,33 +55,15 @@
     "year": 2023,
     "genre": "영화",
     "director": "박훈정",
-    "rating": 4.5,
+    "rating": 4,
     "michelin": 2,
     "poster": "https://www.themoviedb.org/t/p/w1280/a3G0rqGkk3qmfZsI2mOj1kftoZ1.jpg",
-    "tagline": "통쾌하지만 공식화된 시리즈",
+    "tagline": "",
     "tags": [
       "액션",
       "반전",
       "코피노"
     ],
-    "review": ""
-  },
-  {
-    "id": 5,
-    "title": "패스트 라이브즈",
-    "originalTitle": "Past Lives",
-    "year": 2023,
-    "genre": "드라마",
-    "director": "셀린 송",
-    "rating": 4.5,
-    "michelin": 2,
-    "poster": "https://images.justwatch.com/poster/300386960/s718/past-lives.jpg",
-    "tagline": "못다 한 인연에 대한 조용한 슬픔",
-    "tags": [
-      "로맨스",
-      "한국계",
-      "인연"
-    ],
-    "review": "조용하게, 그러나 깊게 울리는 영화다. 화려한 장면 하나 없이 감정을 이렇게까지 끌어올릴 수 있다는 게 셀린 송 감독의 대단함이다.\n\n'인연(因緣)'이라는 한국적 개념이 영화 전체를 관통하는데, 이걸 영어권 관객에게도 이토록 자연스럽게 전달한 게 놀랍다.\n\n마지막 장면에서 멍하니 앉아 있었다. 오래 남는 영화."
+    "review": "\"볼 게 김선호 얼굴과 연기밖에 없다.\"라는 평이 있지만, 충분히 좋은 액션 좋은 시나리오로 2시간을 즐겁게 해주는 영화. 주인공 캐릭터가 조금 평면적이라는 부분이 아쉽다."
   }
 ]
