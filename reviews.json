@@ -32,21 +32,20 @@
   },
   {
     "id": 3,
-    "title": "소울",
+    "title": "사이버펑크: 엣지러너",
     "originalTitle": "Soul",
-    "year": 2020,
+    "year": 2022,
     "genre": "애니메이션",
-    "director": "피트 닥터",
-    "rating": 5,
-    "michelin": 3,
-    "poster": "https://images.justwatch.com/poster/178452026/s718/soul.jpg",
-    "tagline": "살아있다는 것의 의미",
+    "director": "Rafat Jaki",
+    "rating": 3,
+    "michelin": 1,
+    "poster": "https://www.themoviedb.org/t/p/w1280/5GrYF4dzKqlG8qcABlBC93zY7ny.jpg",
+    "tagline": "10화짜리 뮤직비디오",
     "tags": [
-      "픽사",
-      "재즈",
-      "철학적"
-    ],
-    "review": "픽사 최고작 중 하나라고 생각한다. '살아있다는 것'에 대한 질문을 이렇게 따뜻하게 풀어낸 영화가 또 있을까.\n\n삶의 '불꽃'이 거창한 꿈이나 목표가 아니라 아주 작은 순간들 — 피자 한 조각, 낙엽 하나 — 에서 온다는 메시지가 가슴을 울렸다.\n\n재즈 좋아하는 사람이라면 더더욱 추천. 음악 하나하나가 영화의 감정을 완벽하게 받쳐준다."
+      "디스토피아",
+      "공상과학",
+      "비극"
+    ]
   },
   {
     "id": 4,
