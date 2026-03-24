@@ -20,7 +20,7 @@
     "year": 2022,
     "genre": "드라마",
     "director": "유수민, 한준희",
-    "rating": 1.5,
+    "rating": 1,
     "poster": "https://www.themoviedb.org/t/p/w1280/jXd83QZhBDAFno4OGqHcMMDs56i.jpg",
     "tagline": "리메이크: 생각 안하고 작품 만드는 법",
     "tags": [
@@ -33,7 +33,6 @@
   {
     "id": 3,
     "title": "사이버펑크: 엣지러너",
-    "originalTitle": "Soul",
     "year": 2022,
     "genre": "애니메이션",
     "director": "Rafat Jaki",
