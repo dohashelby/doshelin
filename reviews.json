@@ -72,7 +72,7 @@
     "originalTitle": "",
     "year": 2013,
     "genre": "애니메이션",
-    "director": "",
+    "director": "아라키 테츠로, 하야시 유이치로",
     "rating": 5,
     "michelin": 3,
     "poster": "https://www.themoviedb.org/t/p/w1280/kTYFXRdvo7GZWULKjeD4YZ929NC.jpg",
@@ -83,5 +83,23 @@
       "복수"
     ],
     "review": ""
+  },
+  {
+  "id": 6,
+  "title": "어쩔수가없다",
+  "originalTitle": "",
+  "year": 2025,
+  "genre": "영화",
+  "director": "박찬욱",
+  "rating": 4,
+  "michelin": 1,
+  "poster": "https://www.themoviedb.org/t/p/w1280/9w7WGjQes0Cs0s4U3Qr09Tg1Sra.jpg",
+  "tagline": "어쩔 수가… 없나…? 그런 거 같기도 하고…",
+  "tags": [
+  "블랙코미디",
+  "가족",
+  ”살인"
+  ],
+  "review": ""
   }
 ]
