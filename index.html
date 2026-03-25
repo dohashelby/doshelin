@@ -50,7 +50,7 @@ header {
 }
 .hero-eyebrow { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
 .hero h1 { font-family: var(--ff-display); font-size: clamp(52px,9vw,110px); line-height: 0.88; letter-spacing: 0.02em; cursor: pointer; display: inline-block; }
-.hero h1:hover .accent { text-decoration: underline; text-underline-offset: 6px; }
+.hero h1 .accent:hover { text-decoration: underline; text-underline-offset: 6px; }
 .hero h1 .accent { color: var(--accent); }
 
 /* ── CONTROLS ── */
@@ -254,7 +254,7 @@ footer {
 <div class="page active" id="page-main">
   <section class="hero">
     <p class="hero-eyebrow">DOSHELIN GUIDE</p>
-    <h1 onclick="showPage('about')">도슐랭<br><span class="accent">가이드</span></h1>
+    <h1>도슐랭<br><span class="accent" onclick="showPage('about')" style="cursor:pointer;">가이드</span></h1>
   </section>
 
   <div class="controls">
@@ -574,6 +574,15 @@ function closeModal() {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 document.getElementById('searchInput').addEventListener('input', e => { searchQuery = e.target.value; renderGrid(); });
+
+// module 스코프 함수들을 전역에 노출
+window.showPage = showPage;
+window.setGenre = setGenre;
+window.setDosh = setDosh;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.handleBackdropClick = handleBackdropClick;
+window.submitComment = submitComment;
 
 loadReviews();
 </script>
