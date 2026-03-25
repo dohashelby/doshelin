@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doshelin — 도슐랭 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0c0c0c;
+  --surface: #151515;
+  --surface2: #1c1c1c;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --text: #ede9e0;
+  --muted: #6b6860;
+  --muted2: #9a9690;
+  --accent: #c8102e;
+  --accent-dim: rgba(200,16,46,0.1);
+  --star: #f5c518;
+  --ff-display: 'Bebas Neue', sans-serif;
+  --ff-body: 'Noto Serif KR', serif;
+  --ff-mono: 'DM Mono', monospace;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--ff-body); min-height: 100vh; }
+
+header {
+  position: sticky; top: 0; z-index: 300;
+  background: rgba(12,12,12,0.95); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(1rem,5vw,3.5rem); height: 56px;
+}
+.logo { font-family: var(--ff-display); font-size: 26px; letter-spacing: 0.05em; color: var(--accent); cursor: pointer; background: none; border: none; padding: 0; }
+.logo span { color: var(--text); }
+.header-count { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
+
+.page { display: none; }
+.page.active { display: block; }
+
+.hero {
+  padding: clamp(2.5rem,7vw,5rem) clamp(1rem,5vw,3.5rem) clamp(2rem,5vw,3.5rem);
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+.hero h1 { font-family: var(--ff-display); font-size: clamp(52px,9vw,110px); line-height: 0.88; letter-spacing: 0.02em; }
+.hero h1 .accent { color: var(--accent); cursor: pointer; }
+.hero h1 .accent:hover { text-decoration: underline; text-underline-offset: 6px; }
+
+.controls {
+  padding: 0.875rem clamp(1rem,5vw,3.5rem);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.filter-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.filter-sep { width: 1px; height: 18px; background: var(--border2); margin: 0 4px; flex-shrink: 0; }
+.filter-label { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.12em; }
+.filter-btn {
+  font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.04em;
+  padding: 4px 12px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); cursor: pointer;
+  border-radius: 2px; transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(--border2); color: var(--text); }
+.filter-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.search-wrap { margin-left: auto; position: relative; }
+.search-wrap input {
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-family: var(--ff-mono); font-size: 12px;
+  padding: 6px 12px 6px 28px; border-radius: 2px; width: 190px; outline: none;
+  transition: border-color 0.15s;
+}
+.search-wrap input:focus { border-color: var(--border2); }
+.search-wrap input::placeholder { color: var(--muted); }
+.search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px; pointer-events: none; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1px; background: var(--border);
+}
+.empty-state { grid-column: 1/-1; padding: 5rem; text-align: center; font-family: var(--ff-mono); font-size: 12px; color: var(--muted); line-height: 2; }
+
+.card {
+  background: var(--bg); cursor: pointer;
+  animation: fadeUp 0.3s ease both; overflow: hidden;
+  display: flex; flex-direction: column; transition: background 0.15s;
+}
+.card:hover { background: var(--surface); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.card-poster { width: 100%; aspect-ratio: 2/3; position: relative; overflow: hidden; background: var(--surface2); }
+.card-poster img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
+.card:hover .card-poster img { transform: scale(1.04); }
+.poster-fallback {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  font-family: var(--ff-display); font-size: 18px; color: var(--muted); padding: 1rem; text-align: center;
+}
+.card-body { padding: 12px 14px 14px; flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.card-meta { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; }
+.card-title { font-family: var(--ff-display); font-size: 20px; letter-spacing: 0.02em; line-height: 1.05; }
+.card-original { font-size: 11px; color: var(--muted); font-style: italic; }
+.card-tagline { font-size: 12px; color: var(--muted2); line-height: 1.5; flex: 1; margin-top: 2px; }
+.card-footer { margin-top: 8px; display: flex; flex-direction: column; gap: 5px; }
+.card-stars { display: flex; align-items: center; gap: 2px; }
+.s, .ms { font-size: 13px; color: var(--muted); }
+.s.on, .ms.on { color: var(--star); }
+.s-num, .ms-num { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); margin-left: 4px; }
+.card-dosh { display: flex; gap: 2px; }
+.dosh-star { font-size: 13px; color: var(--accent); }
+
+/* ABOUT PAGE */
+.about-page {
+  max-width: 720px; margin: 0 auto;
+  padding: clamp(3rem,8vw,6rem) clamp(1rem,5vw,3.5rem);
+}
+.about-back {
+  font-family: var(--ff-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em;
+  background: none; border: none; cursor: pointer; padding: 0; margin-bottom: 3rem;
+  display: flex; align-items: center; gap: 8px; transition: color 0.15s;
+}
+.about-back:hover { color: var(--text); }
+.about-page-title { font-family: var(--ff-display); font-size: clamp(56px,10vw,100px); color: var(--accent); line-height: 0.88; letter-spacing: 0.02em; margin-bottom: 0.25rem; }
+.about-page-sub { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.12em; margin-bottom: 3rem; }
+.about-page-body { font-size: 15px; color: rgba(237,233,224,0.8); line-height: 2.1; margin-bottom: 3rem; }
+.about-page-body p + p { margin-top: 1.25rem; }
+.about-divider { height: 1px; background: var(--border); margin-bottom: 2.5rem; }
+.about-scale-title { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem; }
+.about-scale { display: flex; flex-direction: column; gap: 1.5rem; }
+.scale-row { display: flex; align-items: flex-start; gap: 1.5rem; }
+.scale-stars { flex-shrink: 0; width: 70px; padding-top: 3px; }
+.scale-dosh { font-size: 20px; color: var(--accent); }
+.scale-text strong { font-family: var(--ff-display); font-size: 18px; letter-spacing: 0.04em; color: var(--text); display: block; margin-bottom: 4px; }
+.scale-text p { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+
+/* MODAL */
+.modal-backdrop {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.88); backdrop-filter: blur(8px);
+  overflow-y: auto; padding: clamp(0.5rem,3vw,2rem);
+}
+.modal-backdrop.open { display: block; }
+.modal-inner { display: flex; align-items: flex-start; justify-content: center; min-height: 100%; padding: 1rem 0; }
+.modal {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 4px; width: 100%; max-width: 740px;
+  animation: slideIn 0.22s ease both; position: relative; overflow: hidden;
+}
+@keyframes slideIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+.modal-close {
+  position: absolute; top: 14px; right: 14px; z-index: 10;
+  background: rgba(0,0,0,0.7); border: 1px solid var(--border2); color: var(--text);
+  width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; font-size: 14px; transition: background 0.15s;
+}
+.modal-close:hover { background: rgba(0,0,0,0.95); }
+.modal-top { display: flex; }
+.modal-poster-wrap { width: 200px; flex-shrink: 0; background: var(--surface2); min-height: 280px; }
+.modal-poster-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.modal-poster-fallback {
+  width: 100%; height: 100%; min-height: 280px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--ff-display); font-size: 20px; color: var(--muted); padding: 1rem; text-align: center;
+}
+.modal-header { flex: 1; padding: 1.75rem 1.75rem 1.25rem; display: flex; flex-direction: column; gap: 8px; }
+.modal-genre-row { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; }
+.modal-title { font-family: var(--ff-display); font-size: clamp(26px,4vw,42px); letter-spacing: 0.02em; line-height: 1; }
+.modal-original { font-size: 12px; color: var(--muted); font-style: italic; }
+.modal-director { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); }
+.modal-rating-block { display: flex; flex-direction: column; gap: 7px; margin-top: 4px; }
+.modal-stars-row { display: flex; align-items: center; gap: 3px; }
+.modal-dosh-row { display: flex; gap: 3px; }
+.modal-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: auto; padding-top: 8px; }
+.modal-tag { font-family: var(--ff-mono); font-size: 10px; padding: 2px 8px; border: 1px solid var(--border); color: var(--muted); border-radius: 2px; }
+.modal-divider { height: 1px; background: var(--border); }
+.modal-body { padding: 1.5rem 1.75rem 1.75rem; }
+.modal-tagline {
+  font-size: 14px; color: var(--muted2); font-style: italic;
+  border-left: 2px solid var(--accent); padding-left: 12px;
+  margin-bottom: 1.25rem; line-height: 1.6;
+}
+.modal-review { font-size: 14px; color: rgba(237,233,224,0.78); line-height: 2; white-space: pre-wrap; }
+
+/* COMMENTS */
+.comments-section { padding: 1.5rem 1.75rem 2rem; border-top: 1px solid var(--border); }
+.comments-title { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1.25rem; }
+.comment-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.75rem; }
+.comment-form-row { display: flex; gap: 8px; }
+.comment-input {
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text); font-family: var(--ff-body); font-size: 13px;
+  padding: 8px 12px; border-radius: 2px; outline: none; transition: border-color 0.15s; width: 100%;
+}
+.comment-input:focus { border-color: var(--border2); }
+.comment-input::placeholder { color: var(--muted); font-family: var(--ff-mono); font-size: 12px; }
+.comment-name { width: 140px; flex-shrink: 0; font-family: var(--ff-mono); font-size: 12px; }
+textarea.comment-input { resize: none; min-height: 70px; line-height: 1.7; }
+.comment-submit {
+  font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.08em;
+  padding: 8px 18px; background: transparent; border: 1px solid var(--accent);
+  color: var(--accent); cursor: pointer; border-radius: 2px; transition: all 0.15s; align-self: flex-end;
+}
+.comment-submit:hover { background: var(--accent-dim); }
+.comments-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+.comment-item { background: var(--bg); padding: 14px 16px; }
+.comment-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+.comment-name-display { font-family: var(--ff-mono); font-size: 12px; color: var(--accent); font-weight: 500; }
+.comment-time { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); }
+.comment-text { font-size: 13px; color: rgba(237,233,224,0.75); line-height: 1.8; }
+.comments-empty { font-family: var(--ff-mono); font-size: 12px; color: var(--muted); padding: 1rem 0; }
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem clamp(1rem,5vw,3.5rem);
+  display: flex; align-items: center; gap: 1rem;
+}
+.footer-stat { font-family: var(--ff-display); font-size: 42px; color: var(--accent); line-height: 1; }
+.footer-label { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); }
+
+@media (max-width: 520px) {
+  .modal-top { flex-direction: column; }
+  .modal-poster-wrap { width: 100%; min-height: 200px; max-height: 260px; }
+  .search-wrap { margin-left: 0; width: 100%; }
+  .search-wrap input { width: 100%; }
+  .comment-form-row { flex-direction: column; }
+  .comment-name { width: 100%; }
+  .filter-sep { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="logo" onclick="showPage('main')">DO<span>SHELIN</span></button>
+  <span class="header-count" id="headerCount">— 편</span>
+</header>
+
+<!-- MAIN PAGE -->
+<div class="page active" id="page-main">
+  <section class="hero">
+    <p class="hero-eyebrow">DOSHELIN GUIDE</p>
+    <h1>도슐랭<br><span class="accent" onclick="showPage('about')">가이드</span></h1>
+  </section>
+
+  <div class="controls">
+    <span class="filter-label">GENRE</span>
+    <div class="filter-group" id="genreBtns"></div>
+    <div class="filter-sep"></div>
+    <span class="filter-label">DOSHELIN</span>
+    <div class="filter-group" id="doshBtns">
+      <button class="filter-btn active" onclick="setDosh(0)">전체</button>
+      <button class="filter-btn" onclick="setDosh(1)">✼</button>
+      <button class="filter-btn" onclick="setDosh(2)">✼✼</button>
+      <button class="filter-btn" onclick="setDosh(3)">✼✼✼</button>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="searchInput" placeholder="제목 검색...">
+    </div>
+  </div>
+
+  <main class="grid" id="grid"></main>
+
+  <footer>
+    <div>
+      <div class="footer-stat" id="footerCount">0</div>
+      <div class="footer-label">편의 리뷰</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ABOUT PAGE -->
+<div class="page" id="page-about">
+  <div class="about-page">
+    <button class="about-back" onclick="showPage('main')">← 돌아가기</button>
+    <div class="about-page-title">DOSHELIN</div>
+    <div class="about-page-sub">도슐랭 가이드 — PERSONAL GUIDE</div>
+    <div class="about-page-body">
+      <p>세상에 영화는 딱 두 가지가 존재한다. 볼 것, 안 볼 것.<br>오직 내 주관이 결정하는 봐야 할 작품과 보지 말아야 할 작품.</p>
+      <p>평점은 작품의 완성도를, 도슐랭 스타는 작품의 추천도를 나타낸다.</p>
+    </div>
+    <div class="about-divider"></div>
+    <div class="about-scale-title">도슐랭 등급 기준</div>
+    <div class="about-scale">
+      <div class="scale-row">
+        <div class="scale-stars"><span class="scale-dosh">✼</span></div>
+        <div class="scale-text">
+          <strong>ONE STAR</strong>
+          <p>심심하면 봐도 손해는 안보는 작품</p>
+        </div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-stars"><span class="scale-dosh">✼✼</span></div>
+        <div class="scale-text">
+          <strong>TWO STARS</strong>
+          <p>시간 나면 챙겨볼 가치 있는 작품</p>
+        </div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-stars"><span class="scale-dosh">✼✼✼</span></div>
+        <div class="scale-text">
+          <strong>THREE STARS</strong>
+          <p>시간을 만들어서라도 봐야 하는 작품</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEW MODAL -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
+  <div class="modal-inner">
+    <div class="modal" id="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-top">
+        <div class="modal-poster-wrap" id="modalPoster"></div>
+        <div class="modal-header" id="modalHeader"></div>
+      </div>
+      <div class="modal-divider"></div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="comments-section">
+        <div class="comments-title">COMMENTS</div>
+        <div class="comment-form">
+          <div class="comment-form-row">
+            <input class="comment-input comment-name" id="commentName" type="text" placeholder="닉네임" maxlength="20">
+            <textarea class="comment-input" id="commentText" placeholder="감상을 남겨주세요..." maxlength="500"></textarea>
+          </div>
+          <button class="comment-submit" onclick="submitComment()">남기기</button>
+        </div>
+        <div id="commentsList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBGvSAcAQ0OJo4_wqgVV8V_AI9TDzq4yuU",
+  authDomain: "doshelin-a4d1f.firebaseapp.com",
+  projectId: "doshelin-a4d1f",
+  storageBucket: "doshelin-a4d1f.firebasestorage.app",
+  messagingSenderId: "997854757997",
+  appId: "1:997854757997:web:aea53702bb96e42ff6ab64",
+  measurementId: "G-VXTPLWZ2WL"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let allReviews = [];
+let activeGenre = '전체';
+let activeDosh = 0;
+let searchQuery = '';
+let currentReviewId = null;
+let unsubscribeComments = null;
+const FIXED_GENRES = ['전체', '영화', '드라마', '애니메이션', '웹툰'];
+
+async function loadReviews() {
+  try {
+    const res = await fetch('reviews.json');
+    if (!res.ok) throw new Error();
+    allReviews = await res.json();
+  } catch(e) {
+    document.getElementById('grid').innerHTML =
+      '<div class="empty-state">⚠️ 로컬에서는 브라우저가 파일 로드를 막습니다.<br>GitHub Pages에 올리면 정상 동작합니다.<br><br>로컬 테스트: <code>npx serve .</code> 또는 VS Code Live Server 사용</div>';
+    return;
+  }
+  document.getElementById('headerCount').textContent = allReviews.length + ' 편';
+  document.getElementById('footerCount').textContent = allReviews.length;
+  renderGenreFilters();
+  renderGrid();
+}
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function renderGenreFilters() {
+  document.getElementById('genreBtns').innerHTML = FIXED_GENRES.map(g =>
+    `<button class="filter-btn${g === activeGenre ? ' active' : ''}" onclick="setGenre('${g}')">${g}</button>`
+  ).join('');
+}
+
+function setGenre(g) { activeGenre = g; renderGenreFilters(); renderGrid(); }
+
+function setDosh(n) {
+  activeDosh = n;
+  document.querySelectorAll('#doshBtns .filter-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === n);
+  });
+  renderGrid();
+}
+
+function getFiltered() {
+  return allReviews.filter(r => {
+    const gOk = activeGenre === '전체' || r.genre === activeGenre;
+    const dOk = activeDosh === 0 || r.michelin === activeDosh;
+    const q = searchQuery.toLowerCase();
+    const sOk = !q || r.title.toLowerCase().includes(q) || (r.originalTitle||'').toLowerCase().includes(q);
+    return gOk && dOk && sOk;
+  });
+}
+
+function renderStars(rating, cls) {
+  return Array.from({length:5}, (_, i) => {
+    const n = i + 1;
+    return `<span class="${cls}${rating >= n ? ' on' : ''}">★</span>`;
+  }).join('');
+}
+
+function doshHTML(n) {
+  return Array.from({length: n}, () => `<span class="dosh-star">✼</span>`).join('');
+}
+
+function renderGrid() {
+  const list = getFiltered();
+  const grid = document.getElementById('grid');
+  if (!list.length) { grid.innerHTML = '<div class="empty-state">검색 결과가 없습니다.</div>'; return; }
+  grid.innerHTML = list.map((r, i) => `
+    <article class="card" style="animation-delay:${i*0.04}s" onclick="openModal(${r.id})">
+      <div class="card-poster">
+        ${r.poster ? `<img src="${r.poster}" alt="${r.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` : ''}
+        <div class="poster-fallback" style="${r.poster ? 'display:none' : ''}">${r.title}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>${r.genre}</span><span>${r.year}</span></div>
+        <div class="card-title">${r.title}</div>
+        ${r.originalTitle ? `<div class="card-original">${r.originalTitle}</div>` : ''}
+        <div class="card-tagline">${r.tagline || ''}</div>
+        <div class="card-footer">
+          <div class="card-stars">${renderStars(r.rating, 's')}<span class="s-num">${r.rating}</span></div>
+          <div class="card-dosh">${doshHTML(r.michelin)}</div>
+        </div>
+      </div>
+    </article>`
+  ).join('');
+}
+
+function openModal(id) {
+  const r = allReviews.find(x => x.id === id);
+  if (!r) return;
+  currentReviewId = id;
+
+  document.getElementById('modalPoster').innerHTML = r.poster
+    ? `<img src="${r.poster}" alt="${r.title}" onerror="this.outerHTML='<div class=\\'modal-poster-fallback\\'>${r.title}</div>'">`
+    : `<div class="modal-poster-fallback">${r.title}</div>`;
+
+  document.getElementById('modalHeader').innerHTML = `
+    <div class="modal-genre-row">${r.genre} · ${r.year}</div>
+    <div class="modal-title">${r.title}</div>
+    ${r.originalTitle ? `<div class="modal-original">${r.originalTitle}</div>` : ''}
+    <div class="modal-director">감독: ${r.director || '—'}</div>
+    <div class="modal-rating-block">
+      <div class="modal-stars-row">${renderStars(r.rating, 'ms')}<span class="ms-num">${r.rating} / 5</span></div>
+      <div class="modal-dosh-row">${doshHTML(r.michelin)}</div>
+    </div>
+    <div class="modal-tags">${(r.tags||[]).map(t => `<span class="modal-tag">${t}</span>`).join('')}</div>
+  `;
+
+  document.getElementById('modalBody').innerHTML = `
+    ${r.tagline ? `<div class="modal-tagline">${r.tagline}</div>` : ''}
+    <div class="modal-review">${r.review}</div>
+  `;
+
+  document.getElementById('commentName').value = localStorage.getItem('dosh_nickname') || '';
+  renderComments(id);
+
+  document.getElementById('modalBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderComments(id) {
+  const el = document.getElementById('commentsList');
+  el.innerHTML = '<div class="comments-empty">댓글을 불러오는 중...</div>';
+
+  if (unsubscribeComments) unsubscribeComments();
+
+  const q = query(
+    collection(db, 'comments'),
+    where('reviewId', '==', String(id)),
+    orderBy('createdAt', 'asc')
+  );
+
+  unsubscribeComments = onSnapshot(q, (snapshot) => {
+    if (snapshot.empty) {
+      el.innerHTML = '<div class="comments-empty">아직 댓글이 없습니다. 첫 번째 감상을 남겨보세요.</div>';
+      return;
+    }
+    el.innerHTML = '<div class="comments-list">' + snapshot.docs.map(doc => {
+      const c = doc.data();
+      const date = c.createdAt ? new Date(c.createdAt.seconds * 1000) : new Date();
+      const time = date.getFullYear() + '.' +
+        String(date.getMonth()+1).padStart(2,'0') + '.' +
+        String(date.getDate()).padStart(2,'0');
+      return `
+        <div class="comment-item">
+          <div class="comment-header">
+            <span class="comment-name-display">${escHtml(c.name)}</span>
+            <span class="comment-time">${time}</span>
+          </div>
+          <div class="comment-text">${escHtml(c.text)}</div>
+        </div>`;
+    }).join('') + '</div>';
+  }, (err) => {
+    el.innerHTML = '<div class="comments-empty">댓글을 불러오지 못했습니다.</div>';
+    console.error(err);
+  });
+}
+
+async function submitComment() {
+  const name = document.getElementById('commentName').value.trim();
+  const text = document.getElementById('commentText').value.trim();
+  if (!name) { alert('닉네임을 입력해주세요.'); return; }
+  if (!text) { alert('댓글 내용을 입력해주세요.'); return; }
+
+  localStorage.setItem('dosh_nickname', name);
+  const btn = document.querySelector('.comment-submit');
+  btn.textContent = '저장 중...';
+  btn.disabled = true;
+
+  try {
+    await addDoc(collection(db, 'comments'), {
+      reviewId: String(currentReviewId),
+      name,
+      text,
+      createdAt: serverTimestamp()
+    });
+    document.getElementById('commentText').value = '';
+  } catch(e) {
+    alert('댓글 저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    console.error(e);
+  } finally {
+    btn.textContent = '남기기';
+    btn.disabled = false;
+  }
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function handleBackdropClick(e) {
+  if (e.target === document.getElementById('modalBackdrop') ||
+      e.target === document.querySelector('.modal-inner')) closeModal();
+}
+
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+  currentReviewId = null;
+  if (unsubscribeComments) { unsubscribeComments(); unsubscribeComments = null; }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.getElementById('searchInput').addEventListener('input', e => { searchQuery = e.target.value; renderGrid(); });
+
+window.showPage = showPage;
+window.setGenre = setGenre;
+window.setDosh = setDosh;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.handleBackdropClick = handleBackdropClick;
+window.submitComment = submitComment;
+
+loadReviews();
+</script>
+</body>
+</html>
