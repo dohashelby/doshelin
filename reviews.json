@@ -65,5 +65,23 @@
       "코피노"
     ],
     "review": "\"볼 게 김선호 얼굴과 연기밖에 없다.\"라는 평이 있지만, 충분히 좋은 액션 좋은 시나리오로 2시간을 즐겁게 해주는 영화. 주인공 캐릭터가 조금 평면적이라는 부분이 아쉽다."
+  },
+  {
+    "id": 5,
+    "title": "진격의 거인",
+    "originalTitle": "",
+    "year": 2013,
+    "genre": "애니메이션",
+    "director": "",
+    "rating": 5,
+    "michelin": 3,
+    "poster": "https://www.themoviedb.org/t/p/w1280/kTYFXRdvo7GZWULKjeD4YZ929NC.jpg"
+    "tagline": "운명적 의지, 의지적 운명",
+    "tags": [
+      "코스믹호러"
+      "디스토피아"
+      "복수"
+    ],
+    "review": ""
   }
 ]
