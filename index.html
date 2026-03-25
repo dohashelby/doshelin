@@ -291,8 +291,8 @@ footer {
     <div class="about-page-title">DOSHELIN</div>
     <div class="about-page-sub">도슐랭 가이드 — PERSONAL GUIDE</div>
     <div class="about-page-body">
-      <p>도슐랭 가이드는 미슐랭 가이드에서 영감을 받은 나만의 감상 아카이브입니다.</p>
-      <p>영화, 드라마, 애니메이션, 웹툰을 가리지 않고 보고 느낀 것들을 솔직하게 기록합니다. 별점 수치보다 ✼ 기호로 나타내는 도슐랭 등급이 핵심입니다. 세 개를 받는 건 아무 작품이나 되지 않습니다.</p>
+      <p>세상에 영화는 딱 두 가지가 존재한다. 볼 것, 안 볼 것.<br>오직 내 주관이 결정하는 봐야 할 작품과 보지 말아야 할 작품.</p>
+      <p>평점은 작품의 완성도를, 미슐랭 스타는 작품의 추천도를 나타낸다.</p>
     </div>
     <div class="about-divider"></div>
     <div class="about-scale-title">도슐랭 등급 기준</div>
@@ -301,21 +301,67 @@ footer {
         <div class="scale-stars"><span class="scale-dosh">✼</span></div>
         <div class="scale-text">
           <strong>ONE STAR</strong>
-          <p>한 번쯤 볼 만한 작품. 시간이 아깝지 않다. 완성도가 있고 고유한 매력이 있지만 누구에게나 권하기엔 조금 망설여진다.</p>
+          <p>평이하게 잘 만들어 불편함이 없는 수작 </section>
+
+  <div class="controls">
+    <span class="filter-label">GENRE</span>
+    <div class="filter-group" id="genreBtns"></div>
+    <div class="filter-sep"></div>
+    <span class="filter-label">DOSHELIN</span>
+    <div class="filter-group" id="doshBtns">
+      <button class="filter-btn dosh active" onclick="setDosh(0)">전체</button>
+      <button class="filter-btn dosh" onclick="setDosh(1)">✼</button>
+      <button class="filter-btn dosh" onclick="setDosh(2)">✼✼</button>
+      <button class="filter-btn dosh" onclick="setDosh(3)">✼✼✼</button>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="searchInput" placeholder="제목 검색...">
+    </div>
+  </div>
+
+  <main class="grid" id="grid"></main>
+
+  <footer>
+    <div>
+      <div class="footer-stat" id="footerCount">0</div>
+      <div class="footer-label">편의 리뷰</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ── ABOUT PAGE ── -->
+<div class="page" id="page-about">
+  <div class="about-page">
+    <button class="about-back" onclick="showPage('main')">← 돌아가기</button>
+    <div class="about-page-title">DOSHELIN</div>
+    <div class="about-page-sub">도슐랭 가이드 — PERSONAL GUIDE</div>
+    <div class="about-page-body">
+      <p>세상에 영화는 딱 두 가지가 존재한다. 볼 것, 안 볼 것.<br>오직 내 주관이 결정하는 봐야 할 작품과 보지 말아야 할 작품.</p>
+      <p>평점은 작품의 완성도를, 도슐랭 스타는 작품의 추천도를 나타낸다.</p>
+    </div>
+    <div class="about-divider"></div>
+    <div class="about-scale-title">도슐랭 등급 기준</div>
+    <div class="about-scale">
+      <div class="scale-row">
+        <div class="scale-stars"><span class="scale-dosh">✼</span></div>
+        <div class="scale-text">
+          <strong>ONE STAR</strong>
+          <p>심심하면 봐도 손해는 안보는 작품</p>
         </div>
       </div>
       <div class="scale-row">
         <div class="scale-stars"><span class="scale-dosh">✼✼</span></div>
         <div class="scale-text">
           <strong>TWO STARS</strong>
-          <p>적극 추천. 주변에 권하고 싶은 작품. 오래 기억에 남고, 다시 꺼내보고 싶어지는 무언가가 있다.</p>
+          <p>시간 나면 챙겨볼 가치 있는 작품</p>
         </div>
       </div>
       <div class="scale-row">
         <div class="scale-stars"><span class="scale-dosh">✼✼✼</span></div>
         <div class="scale-text">
           <strong>THREE STARS</strong>
-          <p>인생작. 이걸 보기 위해 살았다 싶은 작품. 완벽한 경험이었고, 이후의 기준이 달라졌다.</p>
+          <p>시간을 만들어서라도 봐야 하는 작품</p>
         </div>
       </div>
     </div>
