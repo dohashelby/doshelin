@@ -27,7 +27,6 @@
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: var(--ff-body); min-height: 100vh; }
 
-/* ── HEADER ── */
 header {
   position: sticky; top: 0; z-index: 300;
   background: rgba(12,12,12,0.95); backdrop-filter: blur(16px);
@@ -39,21 +38,18 @@ header {
 .logo span { color: var(--text); }
 .header-count { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
 
-/* ── PAGES ── */
 .page { display: none; }
 .page.active { display: block; }
 
-/* ── HERO (main page) ── */
 .hero {
   padding: clamp(2.5rem,7vw,5rem) clamp(1rem,5vw,3.5rem) clamp(2rem,5vw,3.5rem);
   border-bottom: 1px solid var(--border);
 }
 .hero-eyebrow { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
-.hero h1 { font-family: var(--ff-display); font-size: clamp(52px,9vw,110px); line-height: 0.88; letter-spacing: 0.02em; cursor: pointer; display: inline-block; }
+.hero h1 { font-family: var(--ff-display); font-size: clamp(52px,9vw,110px); line-height: 0.88; letter-spacing: 0.02em; }
+.hero h1 .accent { color: var(--accent); cursor: pointer; }
 .hero h1 .accent:hover { text-decoration: underline; text-underline-offset: 6px; }
-.hero h1 .accent { color: var(--accent); }
 
-/* ── CONTROLS ── */
 .controls {
   padding: 0.875rem clamp(1rem,5vw,3.5rem);
   border-bottom: 1px solid var(--border);
@@ -70,7 +66,6 @@ header {
 }
 .filter-btn:hover { border-color: var(--border2); color: var(--text); }
 .filter-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
-.filter-btn.dosh { letter-spacing: 0.02em; }
 .search-wrap { margin-left: auto; position: relative; }
 .search-wrap input {
   background: var(--surface); border: 1px solid var(--border);
@@ -82,7 +77,6 @@ header {
 .search-wrap input::placeholder { color: var(--muted); }
 .search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px; pointer-events: none; }
 
-/* ── GRID ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -90,7 +84,6 @@ header {
 }
 .empty-state { grid-column: 1/-1; padding: 5rem; text-align: center; font-family: var(--ff-mono); font-size: 12px; color: var(--muted); line-height: 2; }
 
-/* ── CARD ── */
 .card {
   background: var(--bg); cursor: pointer;
   animation: fadeUp 0.3s ease both; overflow: hidden;
@@ -106,7 +99,6 @@ header {
   width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
   font-family: var(--ff-display); font-size: 18px; color: var(--muted); padding: 1rem; text-align: center;
 }
-
 .card-body { padding: 12px 14px 14px; flex: 1; display: flex; flex-direction: column; gap: 5px; }
 .card-meta { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; }
 .card-title { font-family: var(--ff-display); font-size: 20px; letter-spacing: 0.02em; line-height: 1.05; }
@@ -120,10 +112,9 @@ header {
 .card-dosh { display: flex; gap: 2px; }
 .dosh-star { font-size: 13px; color: var(--accent); }
 
-/* ── ABOUT PAGE ── */
+/* ABOUT PAGE */
 .about-page {
-  max-width: 720px;
-  margin: 0 auto;
+  max-width: 720px; margin: 0 auto;
   padding: clamp(3rem,8vw,6rem) clamp(1rem,5vw,3.5rem);
 }
 .about-back {
@@ -140,13 +131,12 @@ header {
 .about-scale-title { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem; }
 .about-scale { display: flex; flex-direction: column; gap: 1.5rem; }
 .scale-row { display: flex; align-items: flex-start; gap: 1.5rem; }
-.scale-stars { display: flex; gap: 4px; flex-shrink: 0; width: 70px; padding-top: 3px; }
+.scale-stars { flex-shrink: 0; width: 70px; padding-top: 3px; }
 .scale-dosh { font-size: 20px; color: var(--accent); }
-.scale-text { }
-.scale-text strong { font-family: var(--ff-display); font-size: 18px; letter-spacing: 0.04em; color: var(--text); display: block; margin-bottom: 2px; }
+.scale-text strong { font-family: var(--ff-display); font-size: 18px; letter-spacing: 0.04em; color: var(--text); display: block; margin-bottom: 4px; }
 .scale-text p { font-size: 13px; color: var(--muted2); line-height: 1.7; }
 
-/* ── MODAL ── */
+/* MODAL */
 .modal-backdrop {
   display: none; position: fixed; inset: 0; z-index: 500;
   background: rgba(0,0,0,0.88); backdrop-filter: blur(8px);
@@ -193,10 +183,9 @@ header {
 }
 .modal-review { font-size: 14px; color: rgba(237,233,224,0.78); line-height: 2; white-space: pre-wrap; }
 
-/* ── COMMENTS ── */
+/* COMMENTS */
 .comments-section { padding: 1.5rem 1.75rem 2rem; border-top: 1px solid var(--border); }
 .comments-title { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1.25rem; }
-
 .comment-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.75rem; }
 .comment-form-row { display: flex; gap: 8px; }
 .comment-input {
@@ -214,7 +203,6 @@ textarea.comment-input { resize: none; min-height: 70px; line-height: 1.7; }
   color: var(--accent); cursor: pointer; border-radius: 2px; transition: all 0.15s; align-self: flex-end;
 }
 .comment-submit:hover { background: var(--accent-dim); }
-
 .comments-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
 .comment-item { background: var(--bg); padding: 14px 16px; }
 .comment-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
@@ -223,7 +211,6 @@ textarea.comment-input { resize: none; min-height: 70px; line-height: 1.7; }
 .comment-text { font-size: 13px; color: rgba(237,233,224,0.75); line-height: 1.8; }
 .comments-empty { font-family: var(--ff-mono); font-size: 12px; color: var(--muted); padding: 1rem 0; }
 
-/* ── FOOTER ── */
 footer {
   border-top: 1px solid var(--border);
   padding: 1.5rem clamp(1rem,5vw,3.5rem);
@@ -250,11 +237,11 @@ footer {
   <span class="header-count" id="headerCount">— 편</span>
 </header>
 
-<!-- ── MAIN PAGE ── -->
+<!-- MAIN PAGE -->
 <div class="page active" id="page-main">
   <section class="hero">
     <p class="hero-eyebrow">DOSHELIN GUIDE</p>
-    <h1>도슐랭<br><span class="accent" onclick="showPage('about')" style="cursor:pointer;">가이드</span></h1>
+    <h1>도슐랭<br><span class="accent" onclick="showPage('about')">가이드</span></h1>
   </section>
 
   <div class="controls">
@@ -263,10 +250,10 @@ footer {
     <div class="filter-sep"></div>
     <span class="filter-label">DOSHELIN</span>
     <div class="filter-group" id="doshBtns">
-      <button class="filter-btn dosh active" onclick="setDosh(0)">전체</button>
-      <button class="filter-btn dosh" onclick="setDosh(1)">✼</button>
-      <button class="filter-btn dosh" onclick="setDosh(2)">✼✼</button>
-      <button class="filter-btn dosh" onclick="setDosh(3)">✼✼✼</button>
+      <button class="filter-btn active" onclick="setDosh(0)">전체</button>
+      <button class="filter-btn" onclick="setDosh(1)">✼</button>
+      <button class="filter-btn" onclick="setDosh(2)">✼✼</button>
+      <button class="filter-btn" onclick="setDosh(3)">✼✼✼</button>
     </div>
     <div class="search-wrap">
       <span class="search-icon">⌕</span>
@@ -284,53 +271,7 @@ footer {
   </footer>
 </div>
 
-<!-- ── ABOUT PAGE ── -->
-<div class="page" id="page-about">
-  <div class="about-page">
-    <button class="about-back" onclick="showPage('main')">← 돌아가기</button>
-    <div class="about-page-title">DOSHELIN</div>
-    <div class="about-page-sub">도슐랭 가이드 — PERSONAL GUIDE</div>
-    <div class="about-page-body">
-      <p>세상에 영화는 딱 두 가지가 존재한다. 볼 것, 안 볼 것.<br>오직 내 주관이 결정하는 봐야 할 작품과 보지 말아야 할 작품.</p>
-      <p>평점은 작품의 완성도를, 미슐랭 스타는 작품의 추천도를 나타낸다.</p>
-    </div>
-    <div class="about-divider"></div>
-    <div class="about-scale-title">도슐랭 등급 기준</div>
-    <div class="about-scale">
-      <div class="scale-row">
-        <div class="scale-stars"><span class="scale-dosh">✼</span></div>
-        <div class="scale-text">
-          <strong>ONE STAR</strong>
-          <p>평이하게 잘 만들어 불편함이 없는 수작 </section>
-
-  <div class="controls">
-    <span class="filter-label">GENRE</span>
-    <div class="filter-group" id="genreBtns"></div>
-    <div class="filter-sep"></div>
-    <span class="filter-label">DOSHELIN</span>
-    <div class="filter-group" id="doshBtns">
-      <button class="filter-btn dosh active" onclick="setDosh(0)">전체</button>
-      <button class="filter-btn dosh" onclick="setDosh(1)">✼</button>
-      <button class="filter-btn dosh" onclick="setDosh(2)">✼✼</button>
-      <button class="filter-btn dosh" onclick="setDosh(3)">✼✼✼</button>
-    </div>
-    <div class="search-wrap">
-      <span class="search-icon">⌕</span>
-      <input type="text" id="searchInput" placeholder="제목 검색...">
-    </div>
-  </div>
-
-  <main class="grid" id="grid"></main>
-
-  <footer>
-    <div>
-      <div class="footer-stat" id="footerCount">0</div>
-      <div class="footer-label">편의 리뷰</div>
-    </div>
-  </footer>
-</div>
-
-<!-- ── ABOUT PAGE ── -->
+<!-- ABOUT PAGE -->
 <div class="page" id="page-about">
   <div class="about-page">
     <button class="about-back" onclick="showPage('main')">← 돌아가기</button>
@@ -368,7 +309,7 @@ footer {
   </div>
 </div>
 
-<!-- ── REVIEW MODAL ── -->
+<!-- REVIEW MODAL -->
 <div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
   <div class="modal-inner">
     <div class="modal" id="modal">
@@ -471,8 +412,7 @@ function getFiltered() {
 function renderStars(rating, cls) {
   return Array.from({length:5}, (_, i) => {
     const n = i + 1;
-    const on = rating >= n ? ' on' : '';
-    return `<span class="${cls}${on}">★</span>`;
+    return `<span class="${cls}${rating >= n ? ' on' : ''}">★</span>`;
   }).join('');
 }
 
@@ -611,6 +551,7 @@ function handleBackdropClick(e) {
   if (e.target === document.getElementById('modalBackdrop') ||
       e.target === document.querySelector('.modal-inner')) closeModal();
 }
+
 function closeModal() {
   document.getElementById('modalBackdrop').classList.remove('open');
   document.body.style.overflow = '';
@@ -621,7 +562,6 @@ function closeModal() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 document.getElementById('searchInput').addEventListener('input', e => { searchQuery = e.target.value; renderGrid(); });
 
-// module 스코프 함수들을 전역에 노출
 window.showPage = showPage;
 window.setGenre = setGenre;
 window.setDosh = setDosh;
