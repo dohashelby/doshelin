@@ -348,21 +348,31 @@ footer {
   </div>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBGvSAcAQ0OJo4_wqgVV8V_AI9TDzq4yuU",
+  authDomain: "doshelin-a4d1f.firebaseapp.com",
+  projectId: "doshelin-a4d1f",
+  storageBucket: "doshelin-a4d1f.firebasestorage.app",
+  messagingSenderId: "997854757997",
+  appId: "1:997854757997:web:aea53702bb96e42ff6ab64",
+  measurementId: "G-VXTPLWZ2WL"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 let allReviews = [];
 let activeGenre = '전체';
 let activeDosh = 0;
 let searchQuery = '';
 let currentReviewId = null;
+let unsubscribeComments = null;
 const FIXED_GENRES = ['전체', '영화', '드라마', '애니메이션', '웹툰'];
-
-// comments stored in localStorage keyed by review id
-function getComments(id) {
-  try { return JSON.parse(localStorage.getItem('dosh_comments_' + id) || '[]'); } catch { return []; }
-}
-function saveComments(id, arr) {
-  localStorage.setItem('dosh_comments_' + id, JSON.stringify(arr));
-}
 
 async function loadReviews() {
   try {
@@ -482,41 +492,69 @@ function openModal(id) {
 }
 
 function renderComments(id) {
-  const comments = getComments(id);
   const el = document.getElementById('commentsList');
-  if (!comments.length) {
-    el.innerHTML = '<div class="comments-empty">아직 댓글이 없습니다. 첫 번째 감상을 남겨보세요.</div>';
-    return;
-  }
-  el.innerHTML = '<div class="comments-list">' + comments.map(c => `
-    <div class="comment-item">
-      <div class="comment-header">
-        <span class="comment-name-display">${escHtml(c.name)}</span>
-        <span class="comment-time">${c.time}</span>
-      </div>
-      <div class="comment-text">${escHtml(c.text)}</div>
-    </div>`).join('') + '</div>';
+  el.innerHTML = '<div class="comments-empty">댓글을 불러오는 중...</div>';
+
+  if (unsubscribeComments) unsubscribeComments();
+
+  const q = query(
+    collection(db, 'comments'),
+    where('reviewId', '==', String(id)),
+    orderBy('createdAt', 'asc')
+  );
+
+  unsubscribeComments = onSnapshot(q, (snapshot) => {
+    if (snapshot.empty) {
+      el.innerHTML = '<div class="comments-empty">아직 댓글이 없습니다. 첫 번째 감상을 남겨보세요.</div>';
+      return;
+    }
+    el.innerHTML = '<div class="comments-list">' + snapshot.docs.map(doc => {
+      const c = doc.data();
+      const date = c.createdAt ? new Date(c.createdAt.seconds * 1000) : new Date();
+      const time = date.getFullYear() + '.' +
+        String(date.getMonth()+1).padStart(2,'0') + '.' +
+        String(date.getDate()).padStart(2,'0');
+      return `
+        <div class="comment-item">
+          <div class="comment-header">
+            <span class="comment-name-display">${escHtml(c.name)}</span>
+            <span class="comment-time">${time}</span>
+          </div>
+          <div class="comment-text">${escHtml(c.text)}</div>
+        </div>`;
+    }).join('') + '</div>';
+  }, (err) => {
+    el.innerHTML = '<div class="comments-empty">댓글을 불러오지 못했습니다.</div>';
+    console.error(err);
+  });
 }
 
-function submitComment() {
+async function submitComment() {
   const name = document.getElementById('commentName').value.trim();
   const text = document.getElementById('commentText').value.trim();
   if (!name) { alert('닉네임을 입력해주세요.'); return; }
   if (!text) { alert('댓글 내용을 입력해주세요.'); return; }
 
   localStorage.setItem('dosh_nickname', name);
+  const btn = document.querySelector('.comment-submit');
+  btn.textContent = '저장 중...';
+  btn.disabled = true;
 
-  const now = new Date();
-  const time = now.getFullYear() + '.' +
-    String(now.getMonth()+1).padStart(2,'0') + '.' +
-    String(now.getDate()).padStart(2,'0');
-
-  const comments = getComments(currentReviewId);
-  comments.push({ name, text, time });
-  saveComments(currentReviewId, comments);
-
-  document.getElementById('commentText').value = '';
-  renderComments(currentReviewId);
+  try {
+    await addDoc(collection(db, 'comments'), {
+      reviewId: String(currentReviewId),
+      name,
+      text,
+      createdAt: serverTimestamp()
+    });
+    document.getElementById('commentText').value = '';
+  } catch(e) {
+    alert('댓글 저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    console.error(e);
+  } finally {
+    btn.textContent = '남기기';
+    btn.disabled = false;
+  }
 }
 
 function escHtml(str) {
@@ -531,6 +569,7 @@ function closeModal() {
   document.getElementById('modalBackdrop').classList.remove('open');
   document.body.style.overflow = '';
   currentReviewId = null;
+  if (unsubscribeComments) { unsubscribeComments(); unsubscribeComments = null; }
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
