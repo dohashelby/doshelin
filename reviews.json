@@ -137,5 +137,23 @@
   "추격"
   ],
   "review": "촬영과 때깔로 빈약한 스토리를 아예 지워버리는, 눈이 즐거운 누아르 작품."
+  },
+  {
+    "id": 9,
+    "title": "피키 블라인더스: 불멸의 남자",
+    "originalTitle": "",
+    "year": 2026,
+    "genre": "영화",
+    "director": "Tom Harper",
+    "rating": 4.5,
+    "michelin": 3,
+    "poster": "https://www.themoviedb.org/t/p/w1280/q1GPxUb7dfzfw4toS5TnRoSPVbn.jpg",
+    "tagline": "Everyone meets the end, in the bleak midwinter.",
+    "tags": [
+    "범죄",
+    "가족",
+    "WWII"
+    ],
+    "review": ""
   }
 ]
