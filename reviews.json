@@ -209,5 +209,41 @@
     "비극"
     ],
     "review": "시즌1만 보고 시즌2는 상상만 하는게 정신 건강게 이롭다."
+  },
+  {
+    "id": 13,
+    "title": "살목지",
+    "originalTitle": "",
+    "year": 2026,
+    "genre": "영화",
+    "director": "이상민",
+    "rating": 3.5,
+    "michelin": 1,
+    "poster": "https://www.themoviedb.org/t/p/w1280/fd9qLxLbBtX61zF5TsAO6pMAhYa.jpg",
+    "tagline": "누가 제발 결말 해석 좀;;",
+    "tags": [
+    "공포",
+    "물귀신",
+    "미스테리"
+    ],
+    "review": "촬영 기법은, 비슷한 장르인 곤지암과 비교우위에 있다. 여운을 주려는 부담감이 엔딩을 애매하게 만들었지 않나 싶다."
+  },
+  {
+    "id": 14,
+    "title": "아버지의 복수는 끝이 없어라",
+    "originalTitle": "",
+    "year": 2024,
+    "genre": "웹툰",
+    "director": "강태진",
+    "rating": 4.5,
+    "michelin": 3,
+    "poster": "https://comicthumb-phinf.pstatic.net/20241118_261/pocket_1731927147844DlanO_JPEG/%BD%C3%B8%AE%C1%EE_%C7%A5%C1%F6_690x1000.jpg",
+    "tagline": "그대는 용서할 수 있는가.",
+    "tags": [
+    "복수",
+    "가족",
+    "미스테리"
+    ],
+    "review": "진실을 아는자, 진실을 모르는자, 한 데 뒤섞여 각자의 복수를 다짐한다. 복수는 복수를 낳고, 그 복수가 복수를 낳고..."
   }
 ]
