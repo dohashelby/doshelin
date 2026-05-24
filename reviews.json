@@ -262,7 +262,7 @@
     "액션",
     "범죄"
     ],
-    "review": "\"욕망이 그릇보다 크다? 딱이군.\""
+    "review": "\"강자의 기분이 곧, 약자의 질서다.\""
   },
   {
     "id": 16,
@@ -271,7 +271,8 @@
     "year": "2015",
     "genre": "영화",
     "director": "드니 빌뇌브",
-    "rating": 4,
+    "rating": 5,
+    "michelin": 3,
     "poster": "https://www.themoviedb.org/t/p/w1280/oVA4Rx01OUAYdLOiBNBPjaG7I7v.jpg",
     "tagline": "",
     "tags": [
@@ -280,5 +281,41 @@
     "범죄"
     ],
     "review": "정보와 상황에 대한 눈높이가 관객들과 비슷한 주인공이 이야기에 끌려다니며 강제로 몰입하게 해주는 영화."
+  },
+  {
+    "id": 17,
+    "title": "군체",
+    "originalTitle": "",
+    "year": "2026",
+    "genre": "영화",
+    "director": "연상호",
+    "rating": 4.5,
+    "michelin": 3,
+    "poster": "https://www.themoviedb.org/t/p/w1280/thK6glS5pklrlijsgSN6Hw9GLQK.jpg",
+    "tagline": "처음이었다. 좀비 영화를 보면서 전율했다.",
+    "tags": [
+    "좀비",
+    "공동체",
+    "테러"
+    ],
+    "review": ""
+  },
+    {
+    "id": 18,
+    "title": "더 복서",
+    "originalTitle": "",
+    "year": "2019~2022",
+    "genre": "웹툰",
+    "director": "정지훈",
+    "rating": 5,
+    "michelin": 3,
+    "poster": "https://i.namu.wiki/i/rvX-avTJ8au3pzJPHG9UkIC_9vkjQxSCn73azFqKIaMnprK-fPZQdUPd2MTx2TNhpVspPFny2SLf8HYrIp_Y1e_ICZZYjjmYmjvoKiiLbgTu4an754o2kwZoH4WYUeZ9QdhYh8ohE7EQScgXnKSt-g.webp",
+    "tagline": "절대악의 절대적 폭력이 가르쳐주는 아가페적 사랑",
+    "tags": [
+    "복싱",
+    "사랑",
+    "인생"
+    ],
+    "review": ""
   }
 ]
