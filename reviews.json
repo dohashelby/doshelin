@@ -369,5 +369,23 @@
     "스릴러"
     ],
     "review": "" 
+  },
+  {
+    "id": 22,
+    "title": "나의 해방일지",
+    "originalTitle": "",
+    "year": "2022",
+    "genre": "드라마",
+    "director": "박해영, 김석윤",
+    "rating": 5.0,
+    "michelin": 2,
+    "poster": "https://www.themoviedb.org/t/p/w1280/mrOxruke1FI0Sx6v6BOdpu4yppZ.jpg",
+    "tagline": "문학으로써의 드라마",
+    "tags": [
+    "고독",
+    "사랑",
+    "가족"
+    ],
+    "review": "" 
   }
 ]
