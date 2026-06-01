@@ -73,7 +73,7 @@ function getMediaType(genre) {
   if (genre === '영화') return ['movie'];
   if (genre === '드라마') return ['tv', 'movie'];
   if (genre === '애니메이션') return ['tv', 'movie'];
-  return null; // 웹툰 등
+  return null;
 }
 
 async function findTMDB(review) {
@@ -95,11 +95,6 @@ async function findTMDB(review) {
 }
 
 async function processReview(review) {
-  if (review.genre === '웹툰') {
-    console.log(`  [SKIP] "${review.title}" — 웹툰`);
-    return review;
-  }
-
   if (review.mediaType) {
     console.log(`  [SKIP] "${review.title}" — 이미 처리됨`);
     return review;

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doshelin Admin</title>
+<style>
+@font-face {
+  font-family: 'Jalnan';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
+  font-weight: 400; font-display: swap;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0c0c0c; --surface: #151515; --surface2: #1c1c1c;
+  --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
+  --text: #ede9e0; --muted: #6b6860; --muted2: #9a9690;
+  --accent: #c8102e; --accent-dim: rgba(200,16,46,0.1);
+  --ff-ui: 'Jalnan', sans-serif;
+  --ff-body: 'Pretendard', sans-serif;
+}
+body { background: var(--bg); color: var(--text); font-family: var(--ff-ui); min-height: 100vh; }
+
+/* GATE */
+.gate {
+  position: fixed; inset: 0; background: var(--bg);
+  display: flex; align-items: center; justify-content: center; z-index: 999;
+}
+.gate-box { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.gate-title { font-size: 48px; color: var(--accent); letter-spacing: 0.05em; }
+.gate-sub { font-family: var(--ff-body); font-size: 11px; color: var(--muted); letter-spacing: 0.2em; margin-top: -12px; }
+.gate-input {
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text); font-family: var(--ff-body); font-size: 14px;
+  padding: 10px 16px; border-radius: 2px; outline: none; width: 240px; text-align: center;
+}
+.gate-btn {
+  font-family: var(--ff-ui); font-size: 13px; padding: 8px 32px;
+  background: transparent; border: 1px solid var(--accent); color: var(--accent);
+  cursor: pointer; border-radius: 2px; transition: background 0.15s;
+}
+.gate-btn:hover { background: var(--accent-dim); }
+
+/* LAYOUT */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(12,12,12,0.95); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; height: 56px;
+}
+.logo { font-size: 22px; color: var(--accent); }
+.logo span { color: var(--text); }
+.header-label { font-family: var(--ff-body); font-size: 11px; color: var(--muted); letter-spacing: 0.15em; }
+
+main { max-width: 740px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* SECTIONS */
+.section { margin-bottom: 2.5rem; }
+.section-title {
+  font-family: var(--ff-body); font-size: 10px; color: var(--muted);
+  letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1rem;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+
+/* FORM */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-full { grid-column: 1 / -1; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-family: var(--ff-body); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
+.field input, .field select, .field textarea {
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text); font-family: var(--ff-body); font-size: 13px;
+  padding: 8px 12px; border-radius: 2px; outline: none; transition: border-color 0.15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--border2); }
+.field textarea { resize: vertical; min-height: 80px; line-height: 1.7; }
+.field select option { background: var(--surface2); }
+
+/* TMDB ROW */
+.tmdb-row { display: flex; gap: 8px; align-items: flex-end; }
+.tmdb-row .field { flex: 1; }
+.tmdb-btn {
+  font-family: var(--ff-body); font-size: 11px; letter-spacing: 0.08em;
+  padding: 8px 16px; background: transparent; border: 1px solid var(--border2);
+  color: var(--text); cursor: pointer; border-radius: 2px; transition: all 0.15s;
+  white-space: nowrap; flex-shrink: 0;
+}
+.tmdb-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* POSTER PREVIEW */
+.preview-row { display: flex; gap: 12px; align-items: flex-start; margin-top: 12px; }
+.poster-thumb {
+  width: 80px; height: 120px; object-fit: cover;
+  border: 1px solid var(--border); border-radius: 2px; display: none; flex-shrink: 0;
+}
+.preview-info { font-family: var(--ff-body); font-size: 11px; color: var(--muted2); line-height: 1.8; }
+
+/* RATING */
+.rating-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.star-btn {
+  background: none; border: none; font-size: 20px; color: var(--muted);
+  cursor: pointer; padding: 2px; transition: color 0.1s; line-height: 1;
+}
+.star-btn.on { color: #f5c518; }
+.star-btn.half { color: #f5c518; }
+.rating-val { font-family: var(--ff-body); font-size: 12px; color: var(--muted2); min-width: 30px; }
+
+.michelin-group { display: flex; gap: 6px; }
+.dosh-btn {
+  background: none; border: 1px solid var(--border); border-radius: 2px;
+  color: var(--muted); cursor: pointer; padding: 4px 10px; font-size: 14px; transition: all 0.15s;
+}
+.dosh-btn.on { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+/* SUBMIT */
+.submit-btn {
+  font-family: var(--ff-ui); font-size: 14px; letter-spacing: 0.06em;
+  padding: 12px 40px; background: var(--accent); border: none;
+  color: #fff; cursor: pointer; border-radius: 2px; transition: opacity 0.15s;
+  display: block; margin-top: 2rem;
+}
+.submit-btn:hover { opacity: 0.85; }
+.submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.toast {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  background: var(--surface); border: 1px solid var(--border2);
+  font-family: var(--ff-body); font-size: 13px; color: var(--text);
+  padding: 12px 24px; border-radius: 4px; opacity: 0; transition: opacity 0.3s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <div class="gate-title">DOSHELIN</div>
+    <div class="gate-sub">ADMIN</div>
+    <input class="gate-input" type="password" id="pwInput" placeholder="비밀번호"
+      onkeydown="if(event.key==='Enter')checkPw()">
+    <button class="gate-btn" onclick="checkPw()">입장</button>
+  </div>
+</div>
+
+<div id="adminContent" style="display:none">
+  <header>
+    <div class="logo">DO<span>SHELIN</span></div>
+    <div class="header-label">ADMIN</div>
+  </header>
+
+  <main>
+
+    <!-- TMDB API KEY -->
+    <div class="section">
+      <div class="section-title">TMDB API KEY</div>
+      <div class="field">
+        <label>API 키 (로컬에 저장됨)</label>
+        <input type="password" id="tmdbKey" placeholder="TMDB API 키 입력">
+      </div>
+    </div>
+
+    <!-- REVIEW FORM -->
+    <div class="section">
+      <div class="section-title">NEW REVIEW</div>
+
+      <div class="form-grid">
+
+        <!-- 제목 + TMDB 검색 -->
+        <div class="form-full tmdb-row">
+          <div class="field">
+            <label>제목</label>
+            <input type="text" id="f-title" placeholder="한국어 제목">
+          </div>
+          <div class="field" style="width:100px;flex-shrink:0">
+            <label>연도</label>
+            <input type="text" id="f-year" placeholder="2024">
+          </div>
+          <div class="field" style="width:110px;flex-shrink:0">
+            <label>장르</label>
+            <select id="f-genre">
+              <option value="영화">영화</option>
+              <option value="드라마">드라마</option>
+              <option value="애니메이션">애니메이션</option>
+            </select>
+          </div>
+          <button class="tmdb-btn" onclick="searchTMDB()">TMDB 검색</button>
+        </div>
+
+        <!-- 포스터 미리보기 -->
+        <div class="form-full preview-row" id="previewRow" style="display:none">
+          <img class="poster-thumb" id="posterThumb">
+          <div class="preview-info" id="previewInfo"></div>
+        </div>
+
+        <!-- 감독 -->
+        <div class="field form-full">
+          <label>감독</label>
+          <input type="text" id="f-director" placeholder="자동 입력 또는 직접 입력">
+        </div>
+
+        <!-- 평점 -->
+        <div class="field">
+          <label>내 평점 (0 ~ 5, 0.5 단위)</label>
+          <input type="number" id="f-rating" min="0" max="5" step="0.5" value="0" style="width:90px">
+        </div>
+
+        <!-- 도슐랭 -->
+        <div class="field">
+          <label>도슐랭</label>
+          <div class="michelin-group" id="michelinBtns">
+            <button class="dosh-btn on" onclick="setMichelin(0)">없음</button>
+            <button class="dosh-btn" onclick="setMichelin(1)">✼</button>
+            <button class="dosh-btn" onclick="setMichelin(2)">✼✼</button>
+            <button class="dosh-btn" onclick="setMichelin(3)">✼✼✼</button>
+          </div>
+        </div>
+
+        <!-- 한줄평 -->
+        <div class="field form-full">
+          <label>한줄평 (tagline)</label>
+          <input type="text" id="f-tagline" placeholder="한 줄 코멘트">
+        </div>
+
+        <!-- 태그 -->
+        <div class="field form-full">
+          <label>태그 (쉼표로 구분)</label>
+          <input type="text" id="f-tags" placeholder="액션, 범죄, 복수">
+        </div>
+
+        <!-- 리뷰 본문 -->
+        <div class="field form-full">
+          <label>리뷰 본문</label>
+          <textarea id="f-review" style="min-height:140px" placeholder="리뷰 내용 (선택)"></textarea>
+        </div>
+
+        <!-- TMDB 자동 입력 필드들 (수정 가능) -->
+        <div class="field form-full">
+          <label>출연진 (쉼표로 구분, TMDB 자동 입력)</label>
+          <input type="text" id="f-cast" placeholder="TMDB 검색 후 자동 입력">
+        </div>
+
+        <div class="field form-full">
+          <label>공식 줄거리 (TMDB 자동 입력)</label>
+          <textarea id="f-overview" style="min-height:80px" placeholder="TMDB 검색 후 자동 입력"></textarea>
+        </div>
+
+        <div class="field form-full" style="display:none">
+          <label>포스터 URL</label>
+          <input type="text" id="f-poster">
+        </div>
+        <div class="field form-full" style="display:none">
+          <label>백드롭 URL</label>
+          <input type="text" id="f-backdrop">
+        </div>
+        <div class="field form-full" style="display:none">
+          <input type="text" id="f-mediaType">
+        </div>
+
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="submitReview()">저장</button>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs }
+  from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword }
+  from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBGvSAcAQ0OJo4_wqgVV8V_AI9TDzq4yuU",
+  authDomain: "doshelin-a4d1f.firebaseapp.com",
+  projectId: "doshelin-a4d1f",
+  storageBucket: "doshelin-a4d1f.firebasestorage.app",
+  messagingSenderId: "997854757997",
+  appId: "1:997854757997:web:aea53702bb96e42ff6ab64"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+const ADMIN_EMAIL = 'admin@doshelin.app';
+
+window.checkPw = async function() {
+  const pw = document.getElementById('pwInput').value;
+  const btn = document.querySelector('.gate-btn');
+  btn.textContent = '...';
+  btn.disabled = true;
+  try {
+    await signInWithEmailAndPassword(auth, ADMIN_EMAIL, pw);
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'block';
+    init();
+  } catch(e) {
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').placeholder = '비밀번호가 틀렸습니다';
+  } finally {
+    btn.textContent = '입장';
+    btn.disabled = false;
+  }
+};
+
+// ── 초기화 ────────────────────────────────────
+function init() {
+  const saved = localStorage.getItem('dosh_tmdb_key');
+  if (saved) document.getElementById('tmdbKey').value = saved;
+  document.getElementById('tmdbKey').addEventListener('change', e => {
+    localStorage.setItem('dosh_tmdb_key', e.target.value.trim());
+  });
+  buildStars();
+}
+
+// ── 별점 ──────────────────────────────────────
+let currentRating = 0;
+
+function buildStars() {
+  const wrap = document.getElementById('starBtns');
+  wrap.innerHTML = Array.from({length: 5}, (_, i) => `
+    <button class="star-btn" data-i="${i}"
+      onmouseenter="hoverStar(${i})" onmouseleave="resetStarDisplay()"
+      onclick="clickStar(${i})">★</button>
+    <button class="star-btn" data-i="${i}.5"
+      onmouseenter="hoverStar(${i+0.5})" onmouseleave="resetStarDisplay()"
+      onclick="clickStar(${i+0.5})" style="font-size:14px;opacity:0.6">½</button>
+  `).join('');
+}
+
+window.hoverStar = function(val) {
+  document.getElementById('ratingVal').textContent = val + 0.5;
+};
+window.resetStarDisplay = function() {
+  document.getElementById('ratingVal').textContent = currentRating;
+};
+window.clickStar = function(i) {
+  currentRating = i + 0.5;
+  document.getElementById('ratingVal').textContent = currentRating;
+};
+
+// ── 도슐랭 ────────────────────────────────────
+let currentMichelin = 0;
+
+window.setMichelin = function(n) {
+  currentMichelin = n;
+  document.querySelectorAll('.dosh-btn').forEach((btn, i) => {
+    btn.classList.toggle('on', i === n);
+  });
+};
+
+// ── TMDB 검색 ─────────────────────────────────
+window.searchTMDB = async function() {
+  const title = document.getElementById('f-title').value.trim();
+  const year  = document.getElementById('f-year').value.trim();
+  const genre = document.getElementById('f-genre').value;
+  const key   = document.getElementById('tmdbKey').value.trim();
+
+  if (!title) { showToast('제목을 입력하세요'); return; }
+  if (!key)   { showToast('TMDB API 키를 입력하세요'); return; }
+
+  localStorage.setItem('dosh_tmdb_key', key);
+
+  const mediaType = genre === '영화' ? 'movie' : 'tv';
+  const yearKey   = mediaType === 'movie' ? 'year' : 'first_air_date_year';
+  const searchUrl = `https://api.themoviedb.org/3/search/${mediaType}?api_key=${key}&query=${encodeURIComponent(title)}&${yearKey}=${year}&language=ko-KR`;
+
+  showToast('검색 중...');
+
+  try {
+    let res = await fetch(searchUrl).then(r => r.json());
+
+    // TV 결과 없으면 movie로 재시도
+    if (!res.results?.length && mediaType === 'tv') {
+      res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${encodeURIComponent(title)}&year=${year}&language=ko-KR`).then(r => r.json());
+    }
+
+    if (!res.results?.length) { showToast('검색 결과 없음'); return; }
+
+    const result = res.results[0];
+    const mt = result.release_date !== undefined ? 'movie' : 'tv';
+    const detail = await fetch(`https://api.themoviedb.org/3/${mt}/${result.id}?api_key=${key}&append_to_response=credits&language=ko-KR`).then(r => r.json());
+
+    // 자동 입력
+    if (detail.poster_path) {
+      document.getElementById('f-poster').value = `https://www.themoviedb.org/t/p/w1280${detail.poster_path}`;
+      const thumb = document.getElementById('posterThumb');
+      thumb.src = `https://www.themoviedb.org/t/p/w185${detail.poster_path}`;
+      thumb.style.display = 'block';
+    }
+    if (detail.backdrop_path) {
+      document.getElementById('f-backdrop').value = `https://www.themoviedb.org/t/p/w1280${detail.backdrop_path}`;
+    }
+    if (detail.overview) {
+      document.getElementById('f-overview').value = detail.overview;
+    }
+
+    const cast = detail.credits?.cast?.slice(0, 5).map(c => c.name) || [];
+    document.getElementById('f-cast').value = cast.join(', ');
+
+    if (!document.getElementById('f-director').value) {
+      const dirs = detail.credits?.crew?.filter(c => c.job === 'Director').map(c => c.name) || [];
+      if (dirs.length) document.getElementById('f-director').value = dirs.join(', ');
+    }
+
+    document.getElementById('f-mediaType').value = mt;
+
+    document.getElementById('previewRow').style.display = 'flex';
+    document.getElementById('previewInfo').innerHTML =
+      `<b>${result.title || result.name}</b><br>${result.original_title || result.original_name || ''}<br>TMDB ID: ${result.id}`;
+
+    showToast('자동 입력 완료');
+  } catch(e) {
+    showToast('오류: ' + e.message);
+  }
+};
+
+// ── 저장 ──────────────────────────────────────
+window.submitReview = async function() {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { showToast('제목을 입력하세요'); return; }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '저장 중...';
+
+  try {
+    // 다음 id 계산
+    const snapshot = await getDocs(collection(db, 'reviews'));
+    const maxId = snapshot.docs.reduce((m, d) => Math.max(m, d.data().id || 0), 0);
+
+    const tagsRaw = document.getElementById('f-tags').value;
+    const castRaw = document.getElementById('f-cast').value;
+
+    const review = {
+      id: maxId + 1,
+      title,
+      year: document.getElementById('f-year').value.trim(),
+      genre: document.getElementById('f-genre').value,
+      director: document.getElementById('f-director').value.trim(),
+      rating: parseFloat(document.getElementById('f-rating').value) || 0,
+      michelin: currentMichelin,
+      tagline: document.getElementById('f-tagline').value.trim(),
+      tags: tagsRaw.split(',').map(t => t.trim()).filter(Boolean),
+      review: document.getElementById('f-review').value.trim(),
+      cast: castRaw.split(',').map(c => c.trim()).filter(Boolean),
+      tmdbOverview: document.getElementById('f-overview').value.trim(),
+      poster: document.getElementById('f-poster').value.trim(),
+      backdrop: document.getElementById('f-backdrop').value.trim(),
+      mediaType: document.getElementById('f-mediaType').value.trim(),
+    };
+
+    // 빈 값 제거
+    Object.keys(review).forEach(k => {
+      const v = review[k];
+      if (v === '' || v === null || v === undefined || (Array.isArray(v) && !v.length)) {
+        delete review[k];
+      }
+    });
+
+    await addDoc(collection(db, 'reviews'), review);
+
+    showToast(`"${title}" 저장 완료 (id: ${review.id})`);
+    resetForm();
+  } catch(e) {
+    showToast('저장 실패: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '저장';
+  }
+};
+
+function resetForm() {
+  ['f-title','f-year','f-director','f-tagline','f-tags','f-review',
+   'f-cast','f-overview','f-poster','f-backdrop','f-mediaType'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-genre').value = '영화';
+  document.getElementById('f-rating').value = '0';
+  currentMichelin = 0;
+  document.querySelectorAll('.dosh-btn').forEach((b,i) => b.classList.toggle('on', i===0));
+  document.getElementById('previewRow').style.display = 'none';
+  document.getElementById('posterThumb').style.display = 'none';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>

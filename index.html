@@ -6,6 +6,12 @@
 <title>Doshelin — 도슐랭 가이드</title>
 <style>
 @font-face {
+  font-family: 'Jalnan';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+  font-weight: normal;
+  font-display: swap;
+}
+@font-face {
   font-family: 'Pretendard';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
   font-weight: 400;
@@ -32,9 +38,9 @@
   --accent: #c8102e;
   --accent-dim: rgba(200,16,46,0.1);
   --star: #f5c518;
-  --ff-display: 'Pretendard', sans-serif;
-  --ff-body: 'Pretendard', sans-serif;
-  --ff-mono: 'Pretendard', sans-serif;
+  --ff-display: 'Jalnan', sans-serif;
+  --ff-body: 'Jalnan', sans-serif;
+  --ff-mono: 'Jalnan', sans-serif;
 }
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: var(--ff-body); min-height: 100vh; }
@@ -60,8 +66,8 @@ header {
 }
 .hero-eyebrow { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
 .hero h1 { font-family: var(--ff-display); font-size: clamp(52px,9vw,110px); line-height: 0.88; letter-spacing: 0.02em; }
-.hero h1 .accent { color: var(--accent); cursor: pointer; }
-.hero h1 .accent:hover { text-decoration: underline; text-underline-offset: 6px; }
+.hero h1 .accent { color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 6px; }
+.hero h1 .accent:hover { color: var(--text); }
 
 .request-block { display: flex; flex-direction: column; align-items: flex-end; gap: 0; padding-bottom: 4px; }
 .request-label {
@@ -264,7 +270,7 @@ textarea.request-input { resize: none; min-height: 80px; line-height: 1.7; }
   border-left: 2px solid var(--accent); padding-left: 12px;
   margin-bottom: 1.25rem; line-height: 1.6;
 }
-.modal-review { font-size: 14px; color: rgba(237,233,224,0.78); line-height: 2; white-space: pre-wrap; }
+.modal-review { font-family: 'Pretendard', sans-serif; font-size: 14px; color: rgba(237,233,224,0.78); line-height: 2; white-space: pre-wrap; }
 
 /* COMMENTS */
 .comments-section { padding: 1.5rem 1.75rem 2rem; border-top: 1px solid var(--border); }
@@ -329,6 +335,7 @@ footer {
 
 /* OVERVIEW */
 .modal-overview {
+  font-family: 'Pretendard', sans-serif;
   font-size: 13px; color: rgba(237,233,224,0.58); line-height: 1.9;
 }
 
@@ -478,7 +485,7 @@ footer {
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp }
+import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, onSnapshot, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -501,16 +508,14 @@ let searchQuery = '';
 let currentReviewId = null;
 let unsubscribeComments = null;
 let unsubscribeRequests = null;
-const FIXED_GENRES = ['전체', '영화', '드라마', '애니메이션', '웹툰'];
+const FIXED_GENRES = ['전체', '영화', '드라마', '애니메이션'];
 
 async function loadReviews() {
   try {
-    const res = await fetch('reviews.json');
-    if (!res.ok) throw new Error();
-    allReviews = await res.json();
+    const snapshot = await getDocs(collection(db, 'reviews'));
+    allReviews = snapshot.docs.map(d => d.data()).sort((a, b) => b.id - a.id);
   } catch(e) {
-    document.getElementById('grid').innerHTML =
-      '<div class="empty-state">⚠️ 로컬에서는 브라우저가 파일 로드를 막습니다.<br>GitHub Pages에 올리면 정상 동작합니다.<br><br>로컬 테스트: <code>npx serve .</code> 또는 VS Code Live Server 사용</div>';
+    document.getElementById('grid').innerHTML = '<div class="empty-state">리뷰를 불러오지 못했습니다.</div>';
     return;
   }
   document.getElementById('headerCount').textContent = allReviews.length + ' 편';
@@ -643,8 +648,8 @@ function renderGrid() {
         ${r.originalTitle ? `<div class="card-original">${r.originalTitle}</div>` : ''}
         <div class="card-tagline">${r.tagline || ''}</div>
         <div class="card-footer">
-          <div class="card-stars">${renderStars(r.rating, 's')}<span class="s-num">${r.rating}</span></div>
           <div class="card-dosh">${doshHTML(r.michelin)}</div>
+          <div class="card-stars">${renderStars(r.rating, 's')}<span class="s-num">${r.rating}</span></div>
         </div>
       </div>
     </article>`
@@ -674,6 +679,9 @@ function openModal(id) {
       <div class="modal-dosh-row">${doshHTML(r.michelin)}</div>
     </div>
     <div class="modal-tags">${(r.tags||[]).map(t => `<span class="modal-tag">${t}</span>`).join('')}</div>
+    ${r.cast?.length ? `
+      <div class="modal-cast" style="margin-top:8px">${r.cast.map(n => `<span class="modal-cast-chip">${n}</span>`).join('')}</div>
+    ` : ''}
   `;
 
   document.getElementById('modalBody').innerHTML = `
@@ -685,10 +693,6 @@ function openModal(id) {
     ${r.review ? `
       <div class="modal-section-label">리뷰</div>
       <div class="modal-review">${r.review}</div>
-    ` : ''}
-    ${r.cast?.length ? `
-      <div class="modal-section-label">출연</div>
-      <div class="modal-cast">${r.cast.map(n => `<span class="modal-cast-chip">${n}</span>`).join('')}</div>
     ` : ''}
   `;
 
