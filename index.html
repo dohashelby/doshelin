@@ -290,6 +290,36 @@ footer {
 .footer-stat { font-family: var(--ff-display); font-size: 42px; color: var(--accent); line-height: 1; }
 .footer-label { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); }
 
+/* MODAL BANNER (backdrop) */
+.modal-banner {
+  width: 100%; height: 150px;
+  overflow: hidden; background: var(--surface2); flex-shrink: 0;
+}
+.modal-banner img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 25%;
+  opacity: 0.5; display: block;
+}
+
+/* MODAL SECTION LABELS */
+.modal-section-label {
+  font-family: var(--ff-mono); font-size: 10px;
+  color: var(--muted); letter-spacing: 0.14em;
+  text-transform: uppercase; margin-bottom: 8px; margin-top: 1.5rem;
+}
+
+/* CAST */
+.modal-cast { display: flex; flex-wrap: wrap; gap: 5px; }
+.modal-cast-chip {
+  font-family: var(--ff-mono); font-size: 11px; color: var(--muted2);
+  padding: 3px 9px; border: 1px solid var(--border); border-radius: 2px;
+}
+
+/* OVERVIEW */
+.modal-overview {
+  font-size: 13px; color: rgba(237,233,224,0.58); line-height: 1.9;
+}
+
 @media (max-width: 520px) {
   .modal-top { flex-direction: column; }
   .modal-poster-wrap { width: 100%; min-height: 200px; max-height: 260px; }
@@ -412,6 +442,7 @@ footer {
   <div class="modal-inner">
     <div class="modal" id="modal">
       <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-banner" id="modalBanner"></div>
       <div class="modal-top">
         <div class="modal-poster-wrap" id="modalPoster"></div>
         <div class="modal-header" id="modalHeader"></div>
@@ -613,6 +644,10 @@ function openModal(id) {
   if (!r) return;
   currentReviewId = id;
 
+  document.getElementById('modalBanner').innerHTML = r.backdrop
+    ? `<img src="${r.backdrop}" alt="">`
+    : '';
+
   document.getElementById('modalPoster').innerHTML = r.poster
     ? `<img src="${r.poster}" alt="${r.title}" onerror="this.outerHTML='<div class=\\'modal-poster-fallback\\'>${r.title}</div>'">`
     : `<div class="modal-poster-fallback">${r.title}</div>`;
@@ -631,7 +666,18 @@ function openModal(id) {
 
   document.getElementById('modalBody').innerHTML = `
     ${r.tagline ? `<div class="modal-tagline">${r.tagline}</div>` : ''}
-    <div class="modal-review">${r.review}</div>
+    ${r.tmdbOverview ? `
+      <div class="modal-section-label">줄거리</div>
+      <div class="modal-overview">${r.tmdbOverview}</div>
+    ` : ''}
+    ${r.review ? `
+      <div class="modal-section-label">리뷰</div>
+      <div class="modal-review">${r.review}</div>
+    ` : ''}
+    ${r.cast?.length ? `
+      <div class="modal-section-label">출연</div>
+      <div class="modal-cast">${r.cast.map(n => `<span class="modal-cast-chip">${n}</span>`).join('')}</div>
+    ` : ''}
   `;
 
   document.getElementById('commentName').value = localStorage.getItem('dosh_nickname') || '';
