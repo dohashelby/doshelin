@@ -417,6 +417,9 @@ window.searchTMDB = async function() {
 
     document.getElementById('f-mediaType').value = mt;
 
+    const rawDate = detail.release_date || detail.first_air_date || '';
+    if (rawDate) document.getElementById('f-year').value = rawDate.slice(0, 4);
+
     document.getElementById('previewRow').style.display = 'flex';
     document.getElementById('previewInfo').innerHTML =
       `<b>${result.title || result.name}</b><br>${result.original_title || result.original_name || ''}<br>TMDB ID: ${result.id}`;
