@@ -117,10 +117,7 @@ async function processReview(review) {
     review.poster = `${POSTER_BASE}${details.poster_path}`;
   }
 
-  // 배경 이미지 (신규)
-  if (details.backdrop_path) {
-    review.backdrop = `${BACKDROP_BASE}${details.backdrop_path}`;
-  }
+
 
   // 미디어 타입 저장 (재실행 시 스킵용)
   review.mediaType = mediaType;
