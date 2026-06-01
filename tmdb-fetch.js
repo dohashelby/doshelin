@@ -127,25 +127,8 @@ async function processReview(review) {
     review.backdrop = `${BACKDROP_BASE}${details.backdrop_path}`;
   }
 
-  // 원제 (비어있을 때만)
-  if (!review.originalTitle) {
-    review.originalTitle = details.original_title || details.original_name || '';
-  }
-
   // 미디어 타입 저장 (재실행 시 스킵용)
   review.mediaType = mediaType;
-
-  // 런타임 (분)
-  if (mediaType === 'movie' && details.runtime) {
-    review.runtime = details.runtime;
-  } else if (details.episode_run_time?.[0]) {
-    review.runtime = details.episode_run_time[0];
-  }
-
-  // TMDB 대중 평점
-  if (details.vote_average != null) {
-    review.tmdbRating = Math.round(details.vote_average * 10) / 10;
-  }
 
   // 출연진 top 5
   const cast = details.credits?.cast?.slice(0, 5).map(c => c.name) || [];

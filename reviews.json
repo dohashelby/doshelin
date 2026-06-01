@@ -15,10 +15,7 @@
     ],
     "review": "",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/p4rJTY1rvQrffoh2P09sty5cz8B.jpg",
-    "originalTitle": "기생수: 더 그레이",
     "mediaType": "tv",
-    "runtime": 50,
-    "tmdbRating": 7.4,
     "cast": [
       "전소니",
       "구교환",
@@ -44,10 +41,7 @@
     ],
     "review": "<span class='review-title'>한 예술인의 메모</span><br>'약한영웅이라는 웹툰을 봤다. 너무 재밌다. 뭔 내용인지는 이해가 가지 않지만 그냥 찐따가 계속 싸우는 내용 같다. 자존심일까? 그대로 만들기는 싫다. 내가 이해한 것을 바탕으로 새로운 이야기를 써보자. 연시은이 똑똑하게 싸운다고 하니까 싸울 때 뉴턴법칙을 읊조리자. 볼펜 장면이 강렬했으니까 연시은은 싸울 때마다 필통에서 주섬주섬 볼펜을 꺼내자. 웹툰에서 친구들이 연시은은 보기보다 무대뽀라고 했으니까 앞뒤 안가리고 생각없이 싸우고 보자. 기선제압 이야기가 멋있으니까 넣자. 하지만 그냥 하나하나 다 패자. 연합이 나오면 이야기 쓰기 복잡하니까 그냥 깡패를 등장시키자. 아! 내가 이야기를 새로 쓰니까 연시은이 똑똑하거나 치밀하거나 차분하지도 않고 싸움도 제대로 못한다. 안수호는 더 이상 귀감이 되는 신비한 인물도, 억울한 피해자도 아니고 오히려 나서서 일을 키운다. 하지만 괜찮다. 대중들은 나 같은 대예술인이 아니니 그냥 그러려니 하고 볼 것이다. 원작의 흥행에 편승하기 위해 부랴부랴 원작의 요소를 넣어보자. 무슨 의미가 있었는지 모르겠지만 일단 넣어보자. 열심히 넣다보니 스토리가 뒤죽박죽 이상하다. 괜찮다. 나는 무려 \"영화계\"에 몸 담구고 있는 \"예술인\"이니까.'",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/hj2YSkoqHB2FPHeoALfdd4eufue.jpg",
-    "originalTitle": "약한영웅",
     "mediaType": "tv",
-    "runtime": 84,
-    "tmdbRating": 8.7,
     "cast": [
       "박지훈",
       "최현욱",
@@ -74,10 +68,7 @@
     ],
     "review": "",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/bRE6zX4iOAejLOQCHryoV5WNu8G.jpg",
-    "originalTitle": "サイバーパンク: エッジランナーズ",
     "mediaType": "tv",
-    "runtime": 25,
-    "tmdbRating": 8.5,
     "cast": [
       "KENN"
     ],
@@ -86,7 +77,6 @@
   {
     "id": 4,
     "title": "귀공자",
-    "originalTitle": "귀공자",
     "year": 2023,
     "genre": "영화",
     "director": "박훈정",
@@ -102,8 +92,6 @@
     "review": "\"볼 게 김선호 얼굴과 연기밖에 없다.\"라는 평이 있지만, 충분히 좋은 액션 좋은 시나리오로 2시간을 즐겁게 해주는 영화. 주인공 캐릭터가 조금 평면적이라는 부분이 아쉽다.",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/x9d7iSZNn6LNBzYHbM6x0vhrCPW.jpg",
     "mediaType": "movie",
-    "runtime": 117,
-    "tmdbRating": 7.2,
     "cast": [
       "김선호",
       "강태주",
@@ -116,7 +104,6 @@
   {
     "id": 5,
     "title": "진격의 거인",
-    "originalTitle": "進撃の巨人",
     "year": 2013,
     "genre": "애니메이션",
     "director": "아라키 테츠로, 하야시 유이치로",
@@ -132,7 +119,6 @@
     "review": "",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/rqbCbjB19amtOtFQbb3K2lgm2zv.jpg",
     "mediaType": "tv",
-    "tmdbRating": 8.7,
     "cast": [
       "카지 유우키",
       "이시카와 유이",
@@ -145,7 +131,6 @@
   {
     "id": 6,
     "title": "어쩔수가없다",
-    "originalTitle": "어쩔수가없다",
     "year": 2025,
     "genre": "영화",
     "director": "박찬욱",
@@ -161,8 +146,6 @@
     "review": "",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/s6aB9kjxNg0mu2361IkCUSpyHJV.jpg",
     "mediaType": "movie",
-    "runtime": 139,
-    "tmdbRating": 7.5,
     "cast": [
       "이병헌",
       "손예진",
@@ -175,7 +158,6 @@
   {
     "id": 7,
     "title": "피키 블라인더스",
-    "originalTitle": "Peaky Blinders",
     "year": 2013,
     "genre": "드라마",
     "director": "스티븐 나이트",
@@ -191,7 +173,6 @@
     "review": "",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/wiE9doxiLwq3WCGamDIOb2PqBqc.jpg",
     "mediaType": "tv",
-    "tmdbRating": 8.5,
     "cast": [
       "킬리언 머피",
       "폴 앤더슨",
@@ -203,7 +184,6 @@
   {
     "id": 8,
     "title": "다만 악에서 구하소서",
-    "originalTitle": "다만 악에서 구하소서",
     "year": 2020,
     "genre": "영화",
     "director": "홍원찬",
@@ -219,8 +199,6 @@
     "review": "촬영과 때깔로 빈약한 스토리를 아예 지워버리는, 눈이 즐거운 누아르 작품.",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/au6YoYkzbcgZ4CTCwc57UdhD8FC.jpg",
     "mediaType": "movie",
-    "runtime": 108,
-    "tmdbRating": 6.9,
     "cast": [
       "황정민",
       "이정재",
@@ -233,7 +211,6 @@
   {
     "id": 9,
     "title": "피키 블라인더스: 불멸의 남자",
-    "originalTitle": "Peaky Blinders: The Immortal Man",
     "year": 2026,
     "genre": "영화",
     "director": "Tom Harper",
@@ -249,8 +226,6 @@
     "review": "",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/aouxo2EaR7QSGBBUNTITuW0lj4z.jpg",
     "mediaType": "movie",
-    "runtime": 112,
-    "tmdbRating": 7.2,
     "cast": [
       "킬리언 머피",
       "배리 키오건",
@@ -263,7 +238,6 @@
   {
     "id": 10,
     "title": "마이 네임",
-    "originalTitle": "마이 네임",
     "year": 2021,
     "genre": "드라마",
     "director": "김진민",
@@ -279,8 +253,6 @@
     "review": "",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/x0eIZv8bJYjfTu7VkTOxHU8B91c.jpg",
     "mediaType": "tv",
-    "runtime": 50,
-    "tmdbRating": 8.2,
     "cast": [
       "한소희",
       "박희순",
@@ -293,7 +265,6 @@
   {
     "id": 11,
     "title": "메이드 인 코리아",
-    "originalTitle": "메이드 인 코리아",
     "year": 2025,
     "genre": "드라마",
     "director": "우민호",
@@ -309,7 +280,6 @@
     "review": "정우성과 현빈의 발성이 좀 과해보일 때가 있다.",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/42RCEkRkfvafglUsXD6kN1S9nwP.jpg",
     "mediaType": "tv",
-    "tmdbRating": 7.9,
     "cast": [
       "현빈",
       "정우성",
@@ -322,7 +292,6 @@
   {
     "id": 12,
     "title": "아케인",
-    "originalTitle": "Arcane",
     "year": 2021,
     "genre": "드라마",
     "director": "Christian Linke",
@@ -338,7 +307,6 @@
     "review": "시즌1만 보고 시즌2는 상상만 하는게 정신건강에 이롭다.",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/q8eejQcg1bAqImEV8jh8RtBD4uH.jpg",
     "mediaType": "tv",
-    "tmdbRating": 8.8,
     "cast": [
       "헤일리 스타인펠드",
       "엘라 퍼넬"
@@ -348,7 +316,6 @@
   {
     "id": 13,
     "title": "살목지",
-    "originalTitle": "살목지",
     "year": 2026,
     "genre": "영화",
     "director": "이상민",
@@ -364,8 +331,6 @@
     "review": "촬영 기법은, 비슷한 장르인 곤지암과 비교우위에 있다. 여운을 주려는 부담감이 엔딩을 애매하게 만들었지 않나 싶다.",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/edVIvTc8RofOTxoAZN7a5kxIAay.jpg",
     "mediaType": "movie",
-    "runtime": 96,
-    "tmdbRating": 6.8,
     "cast": [
       "김혜윤",
       "이종원",
@@ -378,7 +343,6 @@
   {
     "id": 14,
     "title": "아버지의 복수는 끝이 없어라",
-    "originalTitle": "",
     "year": 2024,
     "genre": "웹툰",
     "director": "강태진",
@@ -396,7 +360,6 @@
   {
     "id": 15,
     "title": "캐슬",
-    "originalTitle": "",
     "year": "2019~2026",
     "genre": "웹툰",
     "director": "정연",
@@ -414,7 +377,6 @@
   {
     "id": 16,
     "title": "시카리오: 암살자의 도시",
-    "originalTitle": "Sicario",
     "year": "2015",
     "genre": "영화",
     "director": "드니 빌뇌브",
@@ -429,8 +391,6 @@
     "review": "정보와 상황에 대한 눈높이가 관객들과 비슷한 주인공이 이야기에 끌려다니며 강제로 몰입하게 해주는 영화.",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/fKPgObonYgPgCdu88yjV7Hpn7Dp.jpg",
     "mediaType": "movie",
-    "runtime": 121,
-    "tmdbRating": 7.4,
     "cast": [
       "에밀리 블런트",
       "베니시오 델 토로",
@@ -443,7 +403,6 @@
   {
     "id": 17,
     "title": "군체",
-    "originalTitle": "군체",
     "year": "2026",
     "genre": "영화",
     "director": "연상호",
@@ -459,8 +418,6 @@
     "review": "",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/jDvxsBemt2Iyslg7qn2WMzgxz23.jpg",
     "mediaType": "movie",
-    "runtime": 123,
-    "tmdbRating": 6.8,
     "cast": [
       "전지현",
       "구교환",
@@ -473,7 +430,6 @@
   {
     "id": 18,
     "title": "더 복서",
-    "originalTitle": "",
     "year": "2019~2022",
     "genre": "웹툰",
     "director": "정지훈",
@@ -491,7 +447,6 @@
   {
     "id": 19,
     "title": "사냥개들 시즌2",
-    "originalTitle": "",
     "year": "2026",
     "genre": "드라마",
     "director": "김주환",
@@ -509,7 +464,6 @@
   {
     "id": 20,
     "title": "이 사랑 통역 되나요?",
-    "originalTitle": "이 사랑 통역 되나요?",
     "year": "2026",
     "genre": "드라마",
     "director": "홍정은, 홍미란, 유영은",
@@ -524,8 +478,6 @@
     "review": "",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/60Hm8JC1Ps8DsrstAt4PTQuBdIB.jpg",
     "mediaType": "tv",
-    "runtime": 75,
-    "tmdbRating": 8.4,
     "cast": [
       "김선호",
       "고윤정",
@@ -538,7 +490,6 @@
   {
     "id": 21,
     "title": "아무도 없는 숲속에서",
-    "originalTitle": "아무도 없는 숲속에서",
     "year": "2024",
     "genre": "드라마",
     "director": "모완일",
@@ -554,7 +505,6 @@
     "review": "",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/ea6lO0I2wOtC0SiHWZPfg9zRKZo.jpg",
     "mediaType": "tv",
-    "tmdbRating": 7.3,
     "cast": [
       "김윤석",
       "윤계상",
@@ -567,7 +517,6 @@
   {
     "id": 22,
     "title": "나의 해방일지",
-    "originalTitle": "나의 해방일지",
     "year": "2022",
     "genre": "드라마",
     "director": "박해영, 김석윤",
@@ -583,8 +532,6 @@
     "review": "",
     "backdrop": "https://www.themoviedb.org/t/p/w1280/2gXm6JK2r0KYEaInX3sWr5WwD6H.jpg",
     "mediaType": "tv",
-    "runtime": 68,
-    "tmdbRating": 7.9,
     "cast": [
       "이민기",
       "김지원",
