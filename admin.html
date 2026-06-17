@@ -123,10 +123,40 @@ main { max-width: 740px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
   font-family: var(--ff-ui); font-size: 14px; letter-spacing: 0.06em;
   padding: 12px 40px; background: var(--accent); border: none;
   color: #fff; cursor: pointer; border-radius: 2px; transition: opacity 0.15s;
-  display: block; margin-top: 2rem;
 }
 .submit-btn:hover { opacity: 0.85; }
 .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.cancel-btn {
+  font-family: var(--ff-ui); font-size: 14px; letter-spacing: 0.06em;
+  padding: 12px 24px; background: transparent; border: 1px solid var(--border2);
+  color: var(--muted2); cursor: pointer; border-radius: 2px; transition: all 0.15s;
+  display: none;
+}
+.cancel-btn:hover { border-color: var(--text); color: var(--text); }
+.btn-row { display: flex; gap: 10px; align-items: center; margin-top: 2rem; }
+
+/* REVIEW LIST */
+.review-list { display: flex; flex-direction: column; gap: 6px; }
+.review-item {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 2px; padding: 10px 14px; gap: 12px;
+}
+.review-item-info { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+.review-item-title {
+  font-family: var(--ff-body); font-size: 13px; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.review-item-meta { font-family: var(--ff-body); font-size: 11px; color: var(--muted); white-space: nowrap; }
+.review-item-rating { font-family: var(--ff-body); font-size: 11px; color: #f5c518; white-space: nowrap; }
+.edit-btn {
+  font-family: var(--ff-body); font-size: 11px; letter-spacing: 0.08em;
+  padding: 5px 14px; background: transparent; border: 1px solid var(--border2);
+  color: var(--muted2); cursor: pointer; border-radius: 2px; transition: all 0.15s;
+  flex-shrink: 0;
+}
+.edit-btn:hover { border-color: var(--accent); color: var(--accent); }
+.list-empty { font-family: var(--ff-body); font-size: 12px; color: var(--muted); text-align: center; padding: 1rem 0; }
 
 .toast {
   position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
@@ -158,6 +188,14 @@ main { max-width: 740px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
 
   <main>
 
+    <!-- REVIEW LIST -->
+    <div class="section" id="listSection">
+      <div class="section-title">기존 리뷰 수정</div>
+      <div class="review-list" id="reviewList">
+        <div class="list-empty">불러오는 중...</div>
+      </div>
+    </div>
+
     <!-- TMDB API KEY -->
     <div class="section">
       <div class="section-title">TMDB API KEY</div>
@@ -168,8 +206,8 @@ main { max-width: 740px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
     </div>
 
     <!-- REVIEW FORM -->
-    <div class="section">
-      <div class="section-title">NEW REVIEW</div>
+    <div class="section" id="formSection">
+      <div class="section-title" id="formTitle">NEW REVIEW</div>
 
       <div class="form-grid">
 
@@ -266,7 +304,10 @@ main { max-width: 740px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
 
       </div>
 
-      <button class="submit-btn" id="submitBtn" onclick="submitReview()">저장</button>
+      <div class="btn-row">
+        <button class="submit-btn" id="submitBtn" onclick="submitReview()">저장</button>
+        <button class="cancel-btn" id="cancelBtn" onclick="cancelEdit()">취소</button>
+      </div>
     </div>
 
   </main>
@@ -276,7 +317,7 @@ main { max-width: 740px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs }
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc }
   from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword }
   from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
@@ -322,14 +363,102 @@ function init() {
   document.getElementById('tmdbKey').addEventListener('change', e => {
     localStorage.setItem('dosh_tmdb_key', e.target.value.trim());
   });
+  loadReviews();
   buildStars();
 }
+
+// ── 리뷰 목록 불러오기 ─────────────────────────
+const reviewStore = new Map();
+let editingDocId = null;
+
+async function loadReviews() {
+  const listEl = document.getElementById('reviewList');
+  try {
+    const snapshot = await getDocs(collection(db, 'reviews'));
+    const docs = snapshot.docs.map(d => ({ docId: d.id, ...d.data() }));
+    docs.sort((a, b) => (b.id || 0) - (a.id || 0));
+
+    reviewStore.clear();
+    docs.forEach(r => reviewStore.set(r.docId, r));
+
+    if (!docs.length) {
+      listEl.innerHTML = '<div class="list-empty">저장된 리뷰가 없습니다.</div>';
+      return;
+    }
+
+    const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    listEl.innerHTML = docs.map(r => `
+      <div class="review-item">
+        <div class="review-item-info">
+          <span class="review-item-title">${esc(r.title) || '(제목 없음)'}</span>
+          <span class="review-item-meta">${esc(r.year)} · ${esc(r.genre)}</span>
+        </div>
+        <span class="review-item-rating">${r.rating ? '★ ' + r.rating : ''}</span>
+        <button class="edit-btn" data-docid="${esc(r.docId)}">수정</button>
+      </div>
+    `).join('');
+
+    listEl.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', () => loadReviewIntoForm(btn.dataset.docid));
+    });
+  } catch(e) {
+    listEl.innerHTML = '<div class="list-empty">불러오기 실패: ' + e.message + '</div>';
+  }
+}
+
+// ── 리뷰 폼에 불러오기 ─────────────────────────
+window.loadReviewIntoForm = function(docId) {
+  const r = reviewStore.get(docId);
+  if (!r) return;
+  editingDocId = r.docId;
+
+  document.getElementById('f-title').value = r.title || '';
+  document.getElementById('f-year').value = r.year || '';
+  document.getElementById('f-genre').value = r.genre || '영화';
+  document.getElementById('f-director').value = r.director || '';
+  document.getElementById('f-rating').value = r.rating || 0;
+  document.getElementById('f-tagline').value = r.tagline || '';
+  document.getElementById('f-tags').value = (r.tags || []).join(', ');
+  document.getElementById('f-review').value = r.review || '';
+  document.getElementById('f-cast').value = (r.cast || []).join(', ');
+  document.getElementById('f-overview').value = r.tmdbOverview || '';
+  document.getElementById('f-poster').value = r.poster || '';
+  document.getElementById('f-backdrop').value = r.backdrop || '';
+  document.getElementById('f-mediaType').value = r.mediaType || '';
+
+  currentMichelin = r.michelin || 0;
+  document.querySelectorAll('.dosh-btn').forEach((b, i) => b.classList.toggle('on', i === currentMichelin));
+
+  if (r.poster) {
+    const thumb = document.getElementById('posterThumb');
+    thumb.src = r.poster.replace('/w1280', '/w185');
+    thumb.style.display = 'block';
+    document.getElementById('previewRow').style.display = 'flex';
+    document.getElementById('previewInfo').innerHTML = `<b>${r.title}</b><br>${r.year || ''}`;
+  }
+
+  document.getElementById('formTitle').textContent = 'EDIT REVIEW';
+  document.getElementById('submitBtn').textContent = '수정 저장';
+  document.getElementById('cancelBtn').style.display = 'block';
+
+  document.getElementById('formSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+// ── 수정 취소 ──────────────────────────────────
+window.cancelEdit = function() {
+  editingDocId = null;
+  document.getElementById('formTitle').textContent = 'NEW REVIEW';
+  document.getElementById('submitBtn').textContent = '저장';
+  document.getElementById('cancelBtn').style.display = 'none';
+  resetForm();
+};
 
 // ── 별점 ──────────────────────────────────────
 let currentRating = 0;
 
 function buildStars() {
   const wrap = document.getElementById('starBtns');
+  if (!wrap) return;
   wrap.innerHTML = Array.from({length: 5}, (_, i) => `
     <button class="star-btn" data-i="${i}"
       onmouseenter="hoverStar(${i})" onmouseleave="resetStarDisplay()"
@@ -430,25 +559,20 @@ window.searchTMDB = async function() {
   }
 };
 
-// ── 저장 ──────────────────────────────────────
+// ── 저장 / 수정 ───────────────────────────────
 window.submitReview = async function() {
   const title = document.getElementById('f-title').value.trim();
   if (!title) { showToast('제목을 입력하세요'); return; }
 
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
-  btn.textContent = '저장 중...';
+  btn.textContent = editingDocId ? '수정 중...' : '저장 중...';
 
   try {
-    // 다음 id 계산
-    const snapshot = await getDocs(collection(db, 'reviews'));
-    const maxId = snapshot.docs.reduce((m, d) => Math.max(m, d.data().id || 0), 0);
-
     const tagsRaw = document.getElementById('f-tags').value;
     const castRaw = document.getElementById('f-cast').value;
 
-    const review = {
-      id: maxId + 1,
+    const reviewData = {
       title,
       year: document.getElementById('f-year').value.trim(),
       genre: document.getElementById('f-genre').value,
@@ -466,22 +590,34 @@ window.submitReview = async function() {
     };
 
     // 빈 값 제거
-    Object.keys(review).forEach(k => {
-      const v = review[k];
+    Object.keys(reviewData).forEach(k => {
+      const v = reviewData[k];
       if (v === '' || v === null || v === undefined || (Array.isArray(v) && !v.length)) {
-        delete review[k];
+        delete reviewData[k];
       }
     });
 
-    await addDoc(collection(db, 'reviews'), review);
+    if (editingDocId) {
+      await updateDoc(doc(db, 'reviews', editingDocId), reviewData);
+      showToast(`"${title}" 수정 완료`);
+    } else {
+      const snapshot = await getDocs(collection(db, 'reviews'));
+      const maxId = snapshot.docs.reduce((m, d) => Math.max(m, d.data().id || 0), 0);
+      reviewData.id = maxId + 1;
+      await addDoc(collection(db, 'reviews'), reviewData);
+      showToast(`"${title}" 저장 완료 (id: ${reviewData.id})`);
+    }
 
-    showToast(`"${title}" 저장 완료 (id: ${review.id})`);
+    editingDocId = null;
+    document.getElementById('formTitle').textContent = 'NEW REVIEW';
+    document.getElementById('cancelBtn').style.display = 'none';
     resetForm();
+    loadReviews();
   } catch(e) {
     showToast('저장 실패: ' + e.message);
   } finally {
     btn.disabled = false;
-    btn.textContent = '저장';
+    btn.textContent = editingDocId ? '수정 저장' : '저장';
   }
 };
 
@@ -496,6 +632,7 @@ function resetForm() {
   document.querySelectorAll('.dosh-btn').forEach((b,i) => b.classList.toggle('on', i===0));
   document.getElementById('previewRow').style.display = 'none';
   document.getElementById('posterThumb').style.display = 'none';
+  document.getElementById('submitBtn').textContent = '저장';
 }
 
 function showToast(msg) {
